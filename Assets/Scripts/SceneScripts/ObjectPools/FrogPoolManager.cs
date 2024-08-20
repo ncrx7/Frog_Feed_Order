@@ -1,4 +1,4 @@
-using System.Collections;
+/* using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,4 +31,4 @@ public class FrogPoolManager : MonoBehaviour
     {
         _frogPool = new ObjectPoolManager<Frog>(_frogPrefab.GetComponent<Frog>(), _initialPoolSize, transform);
     }
-}
+} */

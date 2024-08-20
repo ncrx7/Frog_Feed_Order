@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4f3d5d6811eb84797a6c93cabfd0c7, type: 3}
+  m_Name: BlueGridObjectItem
+  m_EditorClassIdentifier: 
+  CellTexture: {fileID: 2800000, guid: 434b573e2be9b304fa94c7c4c8ba0d42, type: 3}
+  FrogTexture: {fileID: 2800000, guid: feddc58502ceac547b3c169288dc27c7, type: 3}
+  GrapeTexture: {fileID: 2800000, guid: d50f822d7d4ca9f4f91a7e2bf0da8de4, type: 3}
+  ItemColorType: 2

@@ -14,7 +14,8 @@ public class GridBoardManager : MonoBehaviour
     [SerializeField] Vector3 _originPosition = Vector3.zero;
     [SerializeField] bool _debug = true;
 
-    //[Header("Gem Settings")]
+    [Header("Grid Object Item Settings")]
+    [SerializeField] private GridObjectItemData[] _gridObjectItemDatas;
     //[SerializeField] Gem _gemPrefab;
     //[SerializeField] public GemType[] GemTypes;
 
@@ -44,15 +45,24 @@ public class GridBoardManager : MonoBehaviour
 
     private void InitializeGridAndGems()
     {
-        _grid = GridSystem<GridObject<GridObjectItem>>.VerticalGrid(_width, _height, _cellSize, _originPosition, _debug);
+        _grid = GridSystem<GridObject<GridObjectItem>>.HorizontalGrid(_width, _height, _cellSize, _originPosition, _debug);
 
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
             {
-                //Match3Events.CreateGemObject?.Invoke(x, y, _grid, GemTypes, _gemPoolId);
-                //CreateGem(x, y);
+                GridBoardEventSystem.CreateGridObjectItem?.Invoke(x, y, _grid, _gridObjectItemDatas);
             }
         }
+    }
+
+    public int GetWidth() //TODO: MAKE PROPERTY HERE
+    {
+        return _width;
+    }
+
+    public int GetHeight() //TODO: MAKE PROPERTY HERE
+    {
+        return _height;
     }
 }
