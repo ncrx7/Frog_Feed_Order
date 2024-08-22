@@ -5,5 +5,6 @@ using UnityEngine;
 
 public class GridBoardEventSystem
 {
-    public static Action<int, int, GridSystem<GridObject<GridObjectItem>>, GridObjectItemData[]> CreateGridObjectItem;
+    public static Action<int, int, GridSystem<GridObject<GridObjectItem>>, GridObjectItemData[], Action<GridObjectItemData[]>> CreateGridObjectItem;
+    public static Action<GridObjectItemData[]> SetGridObjectItemType;
 }

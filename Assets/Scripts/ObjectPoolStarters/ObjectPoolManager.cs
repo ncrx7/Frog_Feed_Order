@@ -33,7 +33,8 @@ public class ObjectPoolManager<T> where T : Component
         else
         {
             T newObject = GameObject.Instantiate(prefab, parentTransform);
-            return newObject;
+            Debug.LogWarning("over pool!");
+            return null;
         }
     }
 

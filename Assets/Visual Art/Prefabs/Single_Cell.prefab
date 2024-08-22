@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1522173763394668565}
   - component: {fileID: 2637415079602760656}
   - component: {fileID: 8883615413031305722}
+  - component: {fileID: 6875972315491163553}
   m_Layer: 0
   m_Name: Single_Cell
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3823722076439595739}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -84,3 +85,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6875972315491163553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823722076439595739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0039a3c3e66a9124a8df48f8f4469db1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SubCellColorType: 0
+  CurrentSubCellItemType: 0
+  SubCellItemData: {fileID: 0}
+  SubCellMeshRenderer: {fileID: 8883615413031305722}

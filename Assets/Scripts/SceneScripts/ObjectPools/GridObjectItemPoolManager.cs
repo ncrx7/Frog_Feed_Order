@@ -20,9 +20,11 @@ public class GridObjectItemPoolManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
+    private void Start()
+    {
         _initialPoolSize = GridBoardManager.Instance.GetWidth() * GridBoardManager.Instance.GetHeight();
-
         CreatePool();
     }
 

@@ -1,32 +1,60 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GridObjectItem : MonoBehaviour
 {
     //protected GameObject itemPrefab;
-    [SerializeField] private List<GridObjecItemCell> _gridObjecItemCell;
-    public GridObjectItemData CurrentGridObjectItemData;
+    [SerializeField] private List<GridObjecItemSubCell> _gridObjecItemSubCells;
+    public GridObjecItemSubCell CurrentGridObjectItemCell { get; set; }
+    public GridObjectItemData CurrentGridObjectItemData { get; set; }
+    HashSet<int> usedIndices = new HashSet<int>();
     //public ItemType itemType;
-    public ItemColorType ColorType;
 
-    public void SetCellsType(GridObjectItemData[] gridObjectItemDatas)
+    private void OnEnable()
     {
-        foreach (GridObjecItemCell cell in _gridObjecItemCell)
-        {
-            cell.meshRenderer.material.mainTexture = GetRandomItem(gridObjectItemDatas).CellTexture;
-            Debug.Log("mesh process");
-        }
-        /*      this.frogData = frogData;
-                if (_skinnedMeshRenderer != null)
-                {
-                    Texture frogTexture = frogData.texture;
-                    _skinnedMeshRenderer.material.mainTexture = frogTexture;
-                } */
+        //GridBoardEventSystem.SetGridObjectItemType += HandleSettingSubCellsType;
     }
 
-    private GridObjectItemData GetRandomItem(GridObjectItemData[] gridObjectItemDatas)
+    private void OnDisable()
+    {
+        //GridBoardEventSystem.SetGridObjectItemType -= HandleSettingSubCellsType;
+    }
+
+    public void HandleSettingSubCellsType(GridObjectItemData[] gridObjectItemDatas)
+    {
+        SetCell(gridObjectItemDatas);
+
+
+    }
+
+    private void SetCell(GridObjectItemData[] gridObjectItemDatas)
+    {
+        foreach (GridObjecItemSubCell cell in _gridObjecItemSubCells)
+        {
+            //TODO: ADJUST THIS METHOD TO PREVENT SAME COLOR CELL ON A GRID OBJECT ITEM
+            cell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
+            Debug.Log("mesh process");
+
+            if (cell.id == 0)
+            {
+                CurrentGridObjectItemCell = cell;
+                CurrentGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.FROG);
+            }
+        }
+    }
+
+    private void ResetSubCellID()
+    {
+        for (int i = 0; i < _gridObjecItemSubCells.Count; i++)
+        {
+            _gridObjecItemSubCells[i].id = i;
+        }
+    }
+
+    private GridObjectItemData GetRandomGridObjectItemType(GridObjectItemData[] gridObjectItemDatas)
     {
         if (gridObjectItemDatas == null || gridObjectItemDatas.Length == 0)
         {
@@ -34,17 +62,29 @@ public class GridObjectItem : MonoBehaviour
             return null;
         }
 
-        int randomIndex = UnityEngine.Random.Range(0, gridObjectItemDatas.Length);
+        if (usedIndices.Count >= gridObjectItemDatas.Length)
+        {
+            Debug.LogError("All items have been used.");
+            return null;
+        }
+
+        int randomIndex;
+        do
+        {
+            randomIndex = UnityEngine.Random.Range(0, gridObjectItemDatas.Length);
+        } while (usedIndices.Contains(randomIndex));
+
+        usedIndices.Add(randomIndex);
         return gridObjectItemDatas[randomIndex];
     }
 }
 
 [Serializable]
-public class GridObjecItemCell
+public class GridObjecItemSubCell
 {
     public int id;
     public GameObject cell;
-    public MeshRenderer meshRenderer;
+    public SubCellManager cellManager;
 }
 
 public enum ItemColorType
@@ -55,9 +95,3 @@ public enum ItemColorType
     GREEN,
     PURPLE
 }
-
-/* public enum ItemType
-{
-    FROG,
-    GRAPE
-} */

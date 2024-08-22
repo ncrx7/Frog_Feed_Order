@@ -8,14 +8,14 @@ public class GridBoardManager : MonoBehaviour
 
     [Header("Grid Settings")]
     GridSystem<GridObject<GridObjectItem>> _grid;
-    [SerializeField] int _width = 8;
-    [SerializeField] int _height = 8;
+    [SerializeField] int _width = 5;
+    [SerializeField] int _height = 5;
     [SerializeField] float _cellSize = 1f;
     [SerializeField] Vector3 _originPosition = Vector3.zero;
     [SerializeField] bool _debug = true;
 
     [Header("Grid Object Item Settings")]
-    [SerializeField] private GridObjectItemData[] _gridObjectItemDatas;
+    [SerializeField] public GridObjectItemData[] _gridObjectItemDatas;
     //[SerializeField] Gem _gemPrefab;
     //[SerializeField] public GemType[] GemTypes;
 
@@ -51,7 +51,7 @@ public class GridBoardManager : MonoBehaviour
         {
             for (int y = 0; y < _height; y++)
             {
-                GridBoardEventSystem.CreateGridObjectItem?.Invoke(x, y, _grid, _gridObjectItemDatas);
+                GridBoardEventSystem.CreateGridObjectItem?.Invoke(x, y, _grid, _gridObjectItemDatas, GridBoardEventSystem.SetGridObjectItemType);
             }
         }
     }
