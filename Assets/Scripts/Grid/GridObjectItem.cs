@@ -10,7 +10,7 @@ public class GridObjectItem : MonoBehaviour
     [SerializeField] private List<GridObjecItemSubCell> _gridObjecItemSubCells;
     public GridObjecItemSubCell CurrentGridObjectItemCell { get; set; }
     public GridObjectItemData CurrentGridObjectItemData { get; set; }
-    HashSet<int> usedIndices = new HashSet<int>();
+    HashSet<int> _dataUsedIndices = new HashSet<int>();
     //public ItemType itemType;
 
     private void OnEnable()
@@ -62,7 +62,7 @@ public class GridObjectItem : MonoBehaviour
             return null;
         }
 
-        if (usedIndices.Count >= gridObjectItemDatas.Length)
+        if (_dataUsedIndices.Count >= gridObjectItemDatas.Length)
         {
             Debug.LogError("All items have been used.");
             return null;
@@ -72,9 +72,9 @@ public class GridObjectItem : MonoBehaviour
         do
         {
             randomIndex = UnityEngine.Random.Range(0, gridObjectItemDatas.Length);
-        } while (usedIndices.Contains(randomIndex));
+        } while (_dataUsedIndices.Contains(randomIndex));
 
-        usedIndices.Add(randomIndex);
+        _dataUsedIndices.Add(randomIndex);
         return gridObjectItemDatas[randomIndex];
     }
 }

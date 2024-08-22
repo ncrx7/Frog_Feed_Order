@@ -21,13 +21,13 @@ public class CreateGridObjectItemManager : MonoBehaviour
         gridObjectItem.transform.position = grid.GetWorldPositionCenter(x, y);
         gridObjectItem.transform.SetParent(transform);
         
-        //Gem gem = Instantiate(gemPrefab, grid.GetWorldPositionCenter(x, y), Quaternion.identity, transform); //TODO: FARKLI PARENT
-                                                                                                             //Debug.Log("gem position: " + grid.GetWorldPositionCenter(x, y));
-        gridObjectItem.HandleSettingSubCellsType(gridObjectItemDatas); // Rastgele gem tipini seç
+        //TODO: FARKLI PARENT
+                                                                                                             
+        gridObjectItem.HandleSettingSubCellsType(gridObjectItemDatas); 
         //callback?.Invoke(gridObjectItemDatas);
 
         var gridObject = new GridObject<GridObjectItem>(grid, x, y);
-        gridObject.SetValue(gridObjectItem); // Gem'i grid nesnesine initialize et
-        grid.SetValue(x, y, gridObject); // Grid matrisine grid nesnesini initialize et
+        gridObject.SetValue(gridObjectItem); 
+        grid.SetValue(x, y, gridObject); 
     }
 }
