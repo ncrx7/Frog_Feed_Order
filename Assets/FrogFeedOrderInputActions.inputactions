@@ -1,0 +1,34 @@
+{
+    "name": "FrogFeedOrderInputActions",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "eb683a4d-06af-4c0b-89e2-908671ba7dc5",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Value",
+                    "id": "d0d0113f-3bb8-47a4-b2a8-aa02e73b5252",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "96cbee25-8dad-4812-924a-f3f9d8c730c7",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
