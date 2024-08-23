@@ -6,6 +6,7 @@ public class GrapeManager : MonoBehaviour
 {
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] Texture _frogTexture;
+    private SubCellManager _subCellBelongsTo;
 
     public void SetGrapeColor(GridObjectItemData SubCellItemData)
     {
@@ -17,5 +18,15 @@ public class GrapeManager : MonoBehaviour
 
         //Debug.Log("set frog color worjked : " + _frogTexture);
         _meshRenderer.material.mainTexture = SubCellItemData.GrapeTexture;
+    }
+
+    public void SetSubCellBelonging(SubCellManager subCellManager)
+    {
+        _subCellBelongsTo = subCellManager;
+    }
+
+    public SubCellManager GetSubCellBelonging()
+    {
+        return _subCellBelongsTo;
     }
 }

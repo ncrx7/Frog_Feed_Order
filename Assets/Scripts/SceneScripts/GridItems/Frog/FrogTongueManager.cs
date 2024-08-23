@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FrogTongueManager : MonoBehaviour
 {
+    [Header("Linerenderer Settings")]
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Transform tongueStartPoint;
     [SerializeField] private float maxTongueLength = 10f;
@@ -11,12 +12,16 @@ public class FrogTongueManager : MonoBehaviour
     [SerializeField] private LayerMask correctLayerMask;
     [SerializeField] private LayerMask incorrectLayerMask;
 
+    [Header("References")]
+    [SerializeField] FrogManager _frogManager;
+
     private Vector3 tongueEndPoint;
     private float currentTongueLength;
+
     private bool _isProcessing = false;
     private bool isReturning = false;
     private bool _tongueMoveFinished = false;
-    private List<GameObject> correctObjects = new List<GameObject>();
+    private HashSet<GameObject> correctObjects = new HashSet<GameObject>();
 
     void Start()
     {
@@ -33,61 +38,6 @@ public class FrogTongueManager : MonoBehaviour
         {
             StartCoroutine(HandleFrogTongueMove());
         }
-       /*  foreach (var item in correctObjects)
-        {
-            Debug.Log("correct objects name: " + item.name);
-        }
-        if (!isReturning)
-        {
-            // Dilin uzama yönü (kurbağanın baktığı yön)
-            Vector3 direction = -transform.forward;
-            tongueEndPoint += direction * tongueExtendSpeed * Time.deltaTime;
-            currentTongueLength += tongueExtendSpeed * Time.deltaTime;
-
-            // Raycast ile çarpışma kontrolü
-            Debug.DrawRay(tongueEndPoint, direction, Color.blue);
-            RaycastHit hit;
-            if (Physics.Raycast(tongueEndPoint, direction, out hit, tongueExtendSpeed * Time.deltaTime))
-            {
-                // Doğru bir objeye çarptıysa
-                if (((1 << hit.collider.gameObject.layer) & correctLayerMask) != 0)
-                {
-                    correctObjects.Add(hit.collider.gameObject);
-                }
-                // Yanlış bir objeye çarptıysa
-                else if (((1 << hit.collider.gameObject.layer) & incorrectLayerMask) != 0)
-                {
-                    isReturning = true;
-                }
-            }
-
-            // Maksimum uzunluğa ulaştıysa veya yanlış objeye çarptıysa geri dönmeye başla
-            if (currentTongueLength >= maxTongueLength)
-            {
-                isReturning = true;
-            }
-
-            // Dilin bitiş noktasını güncelle
-            lineRenderer.SetPosition(1, tongueEndPoint);
-        }
-        else
-        {
-            // Dil geri dönüyor
-            tongueEndPoint = Vector3.MoveTowards(tongueEndPoint, tongueStartPoint.position, tongueExtendSpeed * Time.deltaTime);
-            lineRenderer.SetPosition(1, tongueEndPoint);
-
-            if (tongueEndPoint == tongueStartPoint.position)
-            {
-                // Eğer dil geri döndüyse ve doğru objelere çarptıysa onları topla
-                if (correctObjects.Count > 0)
-                {
-                    CollectCorrectObjects();
-                }
-
-                // Her şeyi sıfırla
-                ResetTongue();
-            }
-        } */
     }
 
     public IEnumerator HandleFrogTongueMove()
@@ -98,52 +48,40 @@ public class FrogTongueManager : MonoBehaviour
 
         while (!_tongueMoveFinished)
         {
-            foreach (var item in correctObjects)
-            {
-                Debug.Log("correct objects name: " + item.name);
-            }
             if (!isReturning)
             {
-                // Dilin uzama yönü (kurbağanın baktığı yön)
                 Vector3 direction = -transform.forward;
                 tongueEndPoint += direction * tongueExtendSpeed * Time.deltaTime;
                 currentTongueLength += tongueExtendSpeed * Time.deltaTime;
 
-                // Raycast ile çarpışma kontrolü
                 Debug.DrawRay(tongueEndPoint, direction, Color.blue);
                 RaycastHit hit;
                 if (Physics.Raycast(tongueEndPoint, direction, out hit, tongueExtendSpeed * Time.deltaTime))
                 {
-                    // Doğru bir objeye çarptıysa
                     if (((1 << hit.collider.gameObject.layer) & correctLayerMask) != 0)
                     {
                         correctObjects.Add(hit.collider.gameObject);
                     }
-                    // Yanlış bir objeye çarptıysa
                     else if (((1 << hit.collider.gameObject.layer) & incorrectLayerMask) != 0)
                     {
                         isReturning = true;
                     }
                 }
 
-                // Maksimum uzunluğa ulaştıysa veya yanlış objeye çarptıysa geri dönmeye başla
                 if (currentTongueLength >= maxTongueLength)
                 {
                     isReturning = true;
                 }
 
-                // Dilin bitiş noktasını güncelle
                 lineRenderer.SetPosition(1, tongueEndPoint);
             }
             else
             {
-                // Dil geri dönüyor
                 tongueEndPoint = Vector3.MoveTowards(tongueEndPoint, tongueStartPoint.position, tongueExtendSpeed * Time.deltaTime);
                 lineRenderer.SetPosition(1, tongueEndPoint);
 
                 if (tongueEndPoint == tongueStartPoint.position)
                 {
-                    // Eğer dil geri döndüyse ve doğru objelere çarptıysa onları topla
                     if (correctObjects.Count > 0)
                     {
                         CollectCorrectObjects();
@@ -151,7 +89,7 @@ public class FrogTongueManager : MonoBehaviour
                     _tongueMoveFinished = true;
                     _isProcessing = false;
                     lineRenderer.enabled = false;
-                    // Her şeyi sıfırla
+        
                     ResetTongue();
                 }
             }
@@ -160,7 +98,6 @@ public class FrogTongueManager : MonoBehaviour
         }
     }
 
-    // Doğru objeleri toplama işlemi
     private void CollectCorrectObjects()
     {
         foreach (GameObject obj in correctObjects)
@@ -168,11 +105,23 @@ public class FrogTongueManager : MonoBehaviour
             // Burada objelerle ne yapacağını belirt
             Debug.Log("Collected: " + obj.name);
             // Örnek: objeyi sahneden sil
-            Destroy(obj);
+
+            GrapeManager grapeManager = obj.GetComponent<GrapeManager>();
+
+            SubCellManager grapeSubCell = grapeManager.GetSubCellBelonging();
+            SubCellManager frogSubCell = _frogManager.GetSubCellBelonging();
+
+            //I am destroying top subcell. I dont use cell pool because subcells is instantiating only once in game
+            Destroy(grapeSubCell.gameObject);
+            Destroy(frogSubCell.gameObject);
+
+            //TODO: SET NEW TOP CELL AND SPAWN NEW FROG OR GRAP
+
+            GrapePoolManager.Instance.ReturnGrapeObject(grapeManager);
+            FrogPoolManager.Instance.ReturnFrogObject(_frogManager);
         }
     }
 
-    // Dili sıfırlama işlemi
     private void ResetTongue()
     {
         isReturning = false;

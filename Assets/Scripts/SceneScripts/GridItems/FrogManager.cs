@@ -7,6 +7,7 @@ public class FrogManager : MonoBehaviour
     [SerializeField] private FrogRotationType _frogRotationType;
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
     [SerializeField] Texture _frogTexture;
+    private SubCellManager _subCellBelongsTo;
 
     private void Start()
     {
@@ -34,15 +35,15 @@ public class FrogManager : MonoBehaviour
         switch (_frogRotationType)
         {
             case FrogRotationType.UP:
-                targetRotation = Quaternion.Euler(0, 180, 0); 
+                targetRotation = Quaternion.Euler(0, 180, 0);
                 break;
 
             case FrogRotationType.LEFT:
-                targetRotation = Quaternion.Euler(0, 90, 0); 
+                targetRotation = Quaternion.Euler(0, 90, 0);
                 break;
 
             case FrogRotationType.RIGHT:
-                targetRotation = Quaternion.Euler(0, 270, 0); 
+                targetRotation = Quaternion.Euler(0, 270, 0);
                 break;
 
             case FrogRotationType.DOWN:
@@ -50,23 +51,33 @@ public class FrogManager : MonoBehaviour
                 break;
 
             case FrogRotationType.UP_RIGHT:
-                targetRotation = Quaternion.Euler(0, 225, 0); 
+                targetRotation = Quaternion.Euler(0, 225, 0);
                 break;
 
             case FrogRotationType.UP_LEFT:
-                targetRotation = Quaternion.Euler(0, 135, 0); 
+                targetRotation = Quaternion.Euler(0, 135, 0);
                 break;
 
             case FrogRotationType.DOWN_LEFT:
-                targetRotation = Quaternion.Euler(0, 45, 0); 
+                targetRotation = Quaternion.Euler(0, 45, 0);
                 break;
 
             case FrogRotationType.DOWN_RIGHT:
-                targetRotation = Quaternion.Euler(0, 315, 0); 
+                targetRotation = Quaternion.Euler(0, 315, 0);
                 break;
         }
 
         transform.rotation = targetRotation;
+    }
+
+    public void SetSubCellBelonging(SubCellManager subCellManager)
+    {
+        _subCellBelongsTo = subCellManager;
+    }
+
+    public SubCellManager GetSubCellBelonging()
+    {
+        return _subCellBelongsTo;
     }
 }
 
