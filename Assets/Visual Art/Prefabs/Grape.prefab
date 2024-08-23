@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3830887057445950201}
   - component: {fileID: 513591429973482066}
   - component: {fileID: 8372013606604774306}
+  - component: {fileID: 1224476797715105707}
   m_Layer: 0
   m_Name: Grape
   m_TagString: Untagged
@@ -98,3 +99,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 513591429973482066}
   _frogTexture: {fileID: 0}
+--- !u!65 &1224476797715105707
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4534341181157782731}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.63336253, y: 0.5062599, z: 0.6215816}
+  m_Center: {x: -0.0001603663, y: 0.014140509, z: 0.055995464}

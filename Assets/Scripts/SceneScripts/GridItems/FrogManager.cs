@@ -10,7 +10,7 @@ public class FrogManager : MonoBehaviour
 
     private void Start()
     {
-        SetFrogRotation();
+        SetFrogRotation(FrogRotationType.UP);
     }
 
     public void SetFrogColor(GridObjectItemData SubCellItemData)
@@ -25,8 +25,10 @@ public class FrogManager : MonoBehaviour
         _skinnedMeshRenderer.material.mainTexture = SubCellItemData.FrogTexture;
     }
 
-    private void SetFrogRotation()
+    public void SetFrogRotation(FrogRotationType frogRotationType)
     {
+        _frogRotationType = frogRotationType;
+
         Quaternion targetRotation = Quaternion.identity;
 
         switch (_frogRotationType)
