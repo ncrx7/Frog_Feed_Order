@@ -5,31 +5,31 @@ using UnityEngine;
 public class FrogTongueManager : MonoBehaviour
 {
     [Header("Linerenderer Settings")]
-    [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private Transform tongueStartPoint;
-    [SerializeField] private float maxTongueLength = 10f;
-    [SerializeField] private float tongueExtendSpeed = 5f;
-    [SerializeField] private LayerMask correctLayerMask;
-    [SerializeField] private LayerMask incorrectLayerMask;
+    [SerializeField] private LineRenderer _lineRenderer;
+    [SerializeField] private Transform _tongueStartPoint;
+    [SerializeField] private float _maxTongueLength = 10f;
+    [SerializeField] private float _tongueExtendSpeed = 5f;
+    [SerializeField] private LayerMask _correctLayerMask;
+    [SerializeField] private LayerMask _incorrectLayerMask;
 
     [Header("References")]
     [SerializeField] FrogManager _frogManager;
 
-    private Vector3 tongueEndPoint;
-    private float currentTongueLength;
+    private Vector3 _tongueEndPoint;
+    private float _currentTongueLength;
 
     private bool _isProcessing = false;
-    private bool isReturning = false;
+    private bool _isReturning = false;
     private bool _tongueMoveFinished = false;
-    private HashSet<GameObject> correctObjects = new HashSet<GameObject>();
+    private HashSet<GameObject> _correctObjects = new HashSet<GameObject>();
 
     void Start()
     {
         // Dilin başlangıç noktasını ayarla
-        lineRenderer.SetPosition(0, tongueStartPoint.position);
-        tongueEndPoint = tongueStartPoint.position;
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+        _lineRenderer.SetPosition(0, _tongueStartPoint.position);
+        _tongueEndPoint = _tongueStartPoint.position;
+        _lineRenderer.startWidth = 0.1f;
+        _lineRenderer.endWidth = 0.1f;
     }
 
     void Update()
@@ -43,52 +43,52 @@ public class FrogTongueManager : MonoBehaviour
     public IEnumerator HandleFrogTongueMove()
     {
         _tongueMoveFinished = false;
-        lineRenderer.enabled = true;
+        _lineRenderer.enabled = true;
         _isProcessing = true;
 
         while (!_tongueMoveFinished)
         {
-            if (!isReturning)
+            if (!_isReturning)
             {
                 Vector3 direction = -transform.forward;
-                tongueEndPoint += direction * tongueExtendSpeed * Time.deltaTime;
-                currentTongueLength += tongueExtendSpeed * Time.deltaTime;
+                _tongueEndPoint += direction * _tongueExtendSpeed * Time.deltaTime;
+                _currentTongueLength += _tongueExtendSpeed * Time.deltaTime;
 
-                Debug.DrawRay(tongueEndPoint, direction, Color.blue);
+                Debug.DrawRay(_tongueEndPoint, direction, Color.blue);
                 RaycastHit hit;
-                if (Physics.Raycast(tongueEndPoint, direction, out hit, tongueExtendSpeed * Time.deltaTime))
+                if (Physics.Raycast(_tongueEndPoint, direction, out hit, _tongueExtendSpeed * Time.deltaTime))
                 {
-                    if (((1 << hit.collider.gameObject.layer) & correctLayerMask) != 0)
+                    if (((1 << hit.collider.gameObject.layer) & _correctLayerMask) != 0)
                     {
-                        correctObjects.Add(hit.collider.gameObject);
+                        _correctObjects.Add(hit.collider.gameObject);
                     }
-                    else if (((1 << hit.collider.gameObject.layer) & incorrectLayerMask) != 0)
+                    else if (((1 << hit.collider.gameObject.layer) & _incorrectLayerMask) != 0)
                     {
-                        isReturning = true;
+                        _isReturning = true;
                     }
                 }
 
-                if (currentTongueLength >= maxTongueLength)
+                if (_currentTongueLength >= _maxTongueLength)
                 {
-                    isReturning = true;
+                    _isReturning = true;
                 }
 
-                lineRenderer.SetPosition(1, tongueEndPoint);
+                _lineRenderer.SetPosition(1, _tongueEndPoint);
             }
             else
             {
-                tongueEndPoint = Vector3.MoveTowards(tongueEndPoint, tongueStartPoint.position, tongueExtendSpeed * Time.deltaTime);
-                lineRenderer.SetPosition(1, tongueEndPoint);
+                _tongueEndPoint = Vector3.MoveTowards(_tongueEndPoint, _tongueStartPoint.position, _tongueExtendSpeed * Time.deltaTime);
+                _lineRenderer.SetPosition(1, _tongueEndPoint);
 
-                if (tongueEndPoint == tongueStartPoint.position)
+                if (_tongueEndPoint == _tongueStartPoint.position)
                 {
-                    if (correctObjects.Count > 0)
+                    if (_correctObjects.Count > 0)
                     {
                         CollectCorrectObjects();
                     }
                     _tongueMoveFinished = true;
                     _isProcessing = false;
-                    lineRenderer.enabled = false;
+                    _lineRenderer.enabled = false;
         
                     ResetTongue();
                 }
@@ -100,7 +100,7 @@ public class FrogTongueManager : MonoBehaviour
 
     private void CollectCorrectObjects()
     {
-        foreach (GameObject obj in correctObjects)
+        foreach (GameObject obj in _correctObjects)
         {
             // Burada objelerle ne yapacağını belirt
             Debug.Log("Collected: " + obj.name);
@@ -124,10 +124,10 @@ public class FrogTongueManager : MonoBehaviour
 
     private void ResetTongue()
     {
-        isReturning = false;
-        currentTongueLength = 0f;
-        correctObjects.Clear();
-        lineRenderer.SetPosition(0, tongueStartPoint.position);
-        lineRenderer.SetPosition(1, tongueStartPoint.position);
+        _isReturning = false;
+        _currentTongueLength = 0f;
+        _correctObjects.Clear();
+        _lineRenderer.SetPosition(0, _tongueStartPoint.position);
+        _lineRenderer.SetPosition(1, _tongueStartPoint.position);
     }
 }

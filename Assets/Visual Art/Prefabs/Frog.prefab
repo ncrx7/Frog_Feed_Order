@@ -2100,14 +2100,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fc7c92cbb1e9d42ad22f78f14856a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 6250016745546184781}
-  tongueStartPoint: {fileID: 5556669665675288544}
-  maxTongueLength: 5
-  tongueExtendSpeed: 5
-  correctLayerMask:
+  _lineRenderer: {fileID: 6250016745546184781}
+  _tongueStartPoint: {fileID: 5556669665675288544}
+  _maxTongueLength: 5
+  _tongueExtendSpeed: 5
+  _correctLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  incorrectLayerMask:
+  _incorrectLayerMask:
     serializedVersion: 2
     m_Bits: 16
   _frogManager: {fileID: 3268120667244737721}
