@@ -32,6 +32,9 @@ public class SubCellManager : MonoBehaviour
                 //get frog from frog pool
                 break;
             case CellItemType.GRAPE:
+                GrapeManager grapeManager = GrapePoolManager.Instance.GetGrapeObject();
+                grapeManager.SetGrapeColor(SubCellItemData);
+                grapeManager.transform.position = transform.position;
                 //get grape from grape pool
                 break;
             case CellItemType.ARROW:

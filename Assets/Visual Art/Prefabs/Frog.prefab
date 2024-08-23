@@ -2051,7 +2051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db59339626857154781c2e579f1b929e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinnedMeshRenderer: {fileID: 7551094962675302580}
+  _skinnedMeshRenderer: {fileID: 7551094962675302580}
+  _frogTexture: {fileID: 0}
 --- !u!1 &7512853393604914672
 GameObject:
   m_ObjectHideFlags: 0

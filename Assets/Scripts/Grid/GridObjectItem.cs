@@ -8,7 +8,7 @@ public class GridObjectItem : MonoBehaviour
 {
     //protected GameObject itemPrefab;
     [SerializeField] private List<GridObjecItemSubCell> _gridObjecItemSubCells;
-    public GridObjecItemSubCell CurrentGridObjectItemCell { get; set; }
+    public GridObjecItemSubCell TopGridObjectItemCell { get; set; }
     public GridObjectItemData CurrentGridObjectItemData { get; set; }
     HashSet<int> _dataUsedIndices = new HashSet<int>();
     //public ItemType itemType;
@@ -23,26 +23,57 @@ public class GridObjectItem : MonoBehaviour
         //GridBoardEventSystem.SetGridObjectItemType -= HandleSettingSubCellsType;
     }
 
-    public void HandleSettingSubCellsType(GridObjectItemData[] gridObjectItemDatas)
+    public void HandleSettingSubCellsType(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y)
     {
-        SetCell(gridObjectItemDatas);
-
-
+        SetSubCells(grid, gridObjectItemDatas, x, y);
     }
 
-    private void SetCell(GridObjectItemData[] gridObjectItemDatas)
+    private void SetSubCells(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y)
     {
-        foreach (GridObjecItemSubCell cell in _gridObjecItemSubCells)
+        foreach (GridObjecItemSubCell subCell in _gridObjecItemSubCells)
         {
             //TODO: ADJUST THIS METHOD TO PREVENT SAME COLOR CELL ON A GRID OBJECT ITEM
-            cell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
             Debug.Log("mesh process");
 
-            if (cell.id == 0)
+            if (subCell.id == 0) // Toppest Cells
             {
-                CurrentGridObjectItemCell = cell;
-                CurrentGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.FROG);
+                //subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
+                SetInitialTopSubCell(grid, subCell, gridObjectItemDatas, x, y);
             }
+            else // other cells
+            {
+                subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
+            }
+        }
+    }
+
+    private void SetInitialTopSubCell(GridSystem<GridObject<GridObjectItem>> grid, GridObjecItemSubCell subCell, GridObjectItemData[] gridObjectItemDatas, int x, int y)
+    {
+        TopGridObjectItemCell = subCell;
+
+        if (y == 0) //I assigned a color to the bottom cells and placed a frog object in all of them to start with.
+        {
+            TopGridObjectItemCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
+            TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.FROG);
+        }
+        else // I initially assigned the color of the top cell of the grid object below it to the top cell of each grid object except the bottom one.
+        {
+            GridObjectItemData previousGridObjectTopSubCellItemData = null;
+
+            GridObject<GridObjectItem> previousGridObject = grid.GetValue(x, y - 1);
+            GridObjectItem previousGridObjectItem = previousGridObject.GetValue();
+            List<GridObjecItemSubCell> previousGridObjecItemSubCells = previousGridObjectItem.GetGridObjecItemSubCells();
+            foreach (var previousGridObjectItemSubCell in previousGridObjecItemSubCells)
+            {
+                if (previousGridObjectItemSubCell.id == 0)
+                {
+                    SubCellManager previousGridObjectItemTopSubCell = previousGridObjectItemSubCell.cellManager;
+                    previousGridObjectTopSubCellItemData = previousGridObjectItemTopSubCell.SubCellItemData; 
+                }
+            }
+
+            TopGridObjectItemCell.cellManager.SetSubCellColor(previousGridObjectTopSubCellItemData); 
+            TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
         }
     }
 
@@ -76,6 +107,11 @@ public class GridObjectItem : MonoBehaviour
 
         _dataUsedIndices.Add(randomIndex);
         return gridObjectItemDatas[randomIndex];
+    }
+
+    public List<GridObjecItemSubCell> GetGridObjecItemSubCells()
+    {
+        return _gridObjecItemSubCells;
     }
 }
 

@@ -23,7 +23,7 @@ public class CreateGridObjectItemManager : MonoBehaviour
         
         //TODO: FARKLI PARENT
                                                                                                              
-        gridObjectItem.HandleSettingSubCellsType(gridObjectItemDatas); 
+        gridObjectItem.HandleSettingSubCellsType(grid, gridObjectItemDatas, x, y); 
         //callback?.Invoke(gridObjectItemDatas);
 
         var gridObject = new GridObject<GridObjectItem>(grid, x, y);
