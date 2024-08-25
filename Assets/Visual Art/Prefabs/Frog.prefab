@@ -2088,6 +2088,7 @@ MonoBehaviour:
   _frogRotationType: 0
   _skinnedMeshRenderer: {fileID: 7551094962675302580}
   _frogTexture: {fileID: 0}
+  _frogTongueManager: {fileID: 8803874858955867064}
 --- !u!114 &8803874858955867064
 MonoBehaviour:
   m_ObjectHideFlags: 0

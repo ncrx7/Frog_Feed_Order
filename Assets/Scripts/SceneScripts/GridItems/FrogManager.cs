@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FrogManager : MonoBehaviour
+public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
 {
     [SerializeField] private FrogRotationType _frogRotationType;
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
     [SerializeField] Texture _frogTexture;
+    [SerializeField] private FrogTongueManager _frogTongueManager;
     private SubCellManager _subCellBelongsTo;
 
     private void Start()
@@ -78,6 +79,11 @@ public class FrogManager : MonoBehaviour
     public SubCellManager GetSubCellBelonging()
     {
         return _subCellBelongsTo;
+    }
+
+    public void Interact()
+    {
+        _frogTongueManager.HandleFrogTongueMove();
     }
 }
 

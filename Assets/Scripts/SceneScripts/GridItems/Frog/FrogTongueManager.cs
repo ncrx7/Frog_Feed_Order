@@ -25,7 +25,6 @@ public class FrogTongueManager : MonoBehaviour
 
     void Start()
     {
-        // Dilin başlangıç noktasını ayarla
         _lineRenderer.SetPosition(0, _tongueStartPoint.position);
         _tongueEndPoint = _tongueStartPoint.position;
         _lineRenderer.startWidth = 0.1f;
@@ -36,11 +35,16 @@ public class FrogTongueManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) && !_isProcessing)
         {
-            StartCoroutine(HandleFrogTongueMove());
+            HandleFrogTongueMove();
         }
     }
 
-    public IEnumerator HandleFrogTongueMove()
+    public void HandleFrogTongueMove()
+    {
+        StartCoroutine(HandleFrogTongueMoveCoroutine());
+    }
+
+    private IEnumerator HandleFrogTongueMoveCoroutine()
     {
         _tongueMoveFinished = false;
         _lineRenderer.enabled = true;
@@ -102,9 +106,7 @@ public class FrogTongueManager : MonoBehaviour
     {
         foreach (GameObject obj in _correctObjects)
         {
-            // Burada objelerle ne yapacağını belirt
             Debug.Log("Collected: " + obj.name);
-            // Örnek: objeyi sahneden sil
 
             GrapeManager grapeManager = obj.GetComponent<GrapeManager>();
 

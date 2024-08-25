@@ -56,6 +56,11 @@ public class GridBoardManager : MonoBehaviour
         }
     }
 
+    public GridSystem<GridObject<GridObjectItem>> GetGridBoard()
+    {
+        return _grid;
+    }
+
     public int GetWidth() //TODO: MAKE PROPERTY HERE
     {
         return _width;
@@ -65,4 +70,11 @@ public class GridBoardManager : MonoBehaviour
     {
         return _height;
     }
+
+    public bool IsValidPosition(Vector2 gridPosition)
+    {
+        return gridPosition.x >= 0 && gridPosition.x < _width && gridPosition.y >= 0 && gridPosition.y < _height;
+    }
+
+    public bool IsEmptyPosition(Vector2Int gridPosition) => _grid.GetValue(gridPosition.x, gridPosition.y) == null;
 }

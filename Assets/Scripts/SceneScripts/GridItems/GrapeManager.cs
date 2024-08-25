@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrapeManager : MonoBehaviour
+public class GrapeManager : MonoBehaviour, IGridObjectItemInteractable
 {
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] Texture _frogTexture;
@@ -28,5 +28,10 @@ public class GrapeManager : MonoBehaviour
     public SubCellManager GetSubCellBelonging()
     {
         return _subCellBelongsTo;
+    }
+
+    public void Interact()
+    {
+        Debug.LogWarning("You can not click the grapes!!");
     }
 }

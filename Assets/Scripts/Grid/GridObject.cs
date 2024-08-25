@@ -9,7 +9,7 @@ public class GridObject<T>
     GridSystem<GridObject<T>> grid;
     private int _x;
     private int _y;
-    private T _gridObject;
+    private T _gridObjectItem;
 
     public GridObject(GridSystem<GridObject<T>> grid, int x, int y)
     {
@@ -20,11 +20,11 @@ public class GridObject<T>
 
     public void SetValue(T gridObject)
     {
-        this._gridObject = gridObject;
+        this._gridObjectItem = gridObject;
     }
 
     public T GetValue()
     {
-        return _gridObject;
+        return _gridObjectItem;
     }
 }
