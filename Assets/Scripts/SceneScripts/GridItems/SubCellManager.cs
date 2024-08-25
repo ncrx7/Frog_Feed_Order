@@ -19,6 +19,7 @@ public class SubCellManager : MonoBehaviour
     {
         SubCellItemData = subCellItemData;
         SubCellMeshRenderer.material.mainTexture = SubCellItemData.CellTexture;
+        SubCellColorType = SubCellItemData.ItemColorType;
     }
 
     public void SetSubCellItemType(CellItemType cellItemType)

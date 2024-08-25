@@ -21,6 +21,7 @@ public class FrogTongueManager : MonoBehaviour
     private bool _isProcessing = false;
     private bool _isReturning = false;
     private bool _tongueMoveFinished = false;
+    private bool _isCollectingFinishSuccess;
     private HashSet<GameObject> _correctObjects = new HashSet<GameObject>();
 
     void Start()
@@ -33,7 +34,7 @@ public class FrogTongueManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && !_isProcessing)
+        if (Input.GetKeyDown(KeyCode.Space) && !_isProcessing)
         {
             HandleFrogTongueMove();
         }
@@ -62,19 +63,34 @@ public class FrogTongueManager : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(_tongueEndPoint, direction, out hit, _tongueExtendSpeed * Time.deltaTime))
                 {
-                    if (((1 << hit.collider.gameObject.layer) & _correctLayerMask) != 0)
+/*                     if (((1 << hit.collider.gameObject.layer) & _correctLayerMask) != 0)
                     {
                         _correctObjects.Add(hit.collider.gameObject);
                     }
                     else if (((1 << hit.collider.gameObject.layer) & _incorrectLayerMask) != 0)
                     {
                         _isReturning = true;
+                    } */
+
+
+                    if (hit.collider.TryGetComponent<GrapeManager>(out GrapeManager grapeManager))
+                    {
+                        if (_frogManager.GetSubCellBelonging().SubCellColorType == grapeManager.GetSubCellBelonging().SubCellColorType)
+                        {
+                            _correctObjects.Add(hit.collider.gameObject);
+                        }
+                        else
+                        {
+                            _isReturning = true;
+                            _isCollectingFinishSuccess = false;
+                        }
                     }
                 }
 
                 if (_currentTongueLength >= _maxTongueLength)
                 {
                     _isReturning = true;
+                    _isCollectingFinishSuccess = true;
                 }
 
                 _lineRenderer.SetPosition(1, _tongueEndPoint);
@@ -86,14 +102,14 @@ public class FrogTongueManager : MonoBehaviour
 
                 if (_tongueEndPoint == _tongueStartPoint.position)
                 {
-                    if (_correctObjects.Count > 0)
+                    if (_correctObjects.Count > 0 && _isCollectingFinishSuccess)
                     {
                         CollectCorrectObjects();
                     }
                     _tongueMoveFinished = true;
                     _isProcessing = false;
                     _lineRenderer.enabled = false;
-        
+
                     ResetTongue();
                 }
             }

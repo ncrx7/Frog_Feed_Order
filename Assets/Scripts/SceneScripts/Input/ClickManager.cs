@@ -38,30 +38,35 @@ public class ClickManager : MonoBehaviour
         grid = GridBoardManager.Instance.GetGridBoard();
     }
 
+    /// <summary>
+    /// I could do this by sending rays to the scene directly with the mouse.
+    /// But I wanted to use the features of the grid system I programmed.
+    /// </summary>
+
     private void HandleClick()
     {
         Debug.Log("clicked");
         if (!_isProcessing && !IsPausedGame && SwapAmount > 0)
         {
-            var gridPos = grid.GetXY(Camera.main.ScreenToWorldPoint(InputManager.Instance.MousePosition)); 
+            var gridPos = grid.GetXY(Camera.main.ScreenToWorldPoint(InputManager.Instance.MousePosition));
             if (!GridBoardManager.Instance.IsValidPosition(gridPos) || GridBoardManager.Instance.IsEmptyPosition(gridPos)) return;
             //Debug.Log("gridpos: " + gridPos);
 
             var gridObject = grid.GetValue(gridPos.x, gridPos.y);
-            var gridObjectItemObject = gridObject.GetValue(); 
+            var gridObjectItemObject = gridObject.GetValue();
 
             GridObjectItem gridObjectItem = gridObjectItemObject.GetComponent<GridObjectItem>();
-            SubCellManager gridTopSubCellManager = gridObjectItem.TopGridObjectItemCell.cellManager; 
+            SubCellManager gridTopSubCellManager = gridObjectItem.TopGridObjectItemCell.cellManager;
 
-            if(gridTopSubCellManager.gridObjectItemInteractable == null)
+            if (gridTopSubCellManager.gridObjectItemInteractable == null)
                 return;
-                
+
             gridTopSubCellManager.gridObjectItemInteractable.Interact();
             //Debug.Log("gridobjectitem: " + gridObjectItem);
 
-            
+
         }
     }
 
-    
+
 }
