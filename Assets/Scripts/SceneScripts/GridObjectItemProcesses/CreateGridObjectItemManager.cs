@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CreateGridObjectItemManager : MonoBehaviour
 {
+    [SerializeField] private List<GridGroup> _gridGroupsData = new List<GridGroup>();
+
     private void OnEnable()
     {
         GridBoardEventSystem.CreateGridObjectItem += HandleCreatingGridObjectItem;
@@ -23,7 +25,7 @@ public class CreateGridObjectItemManager : MonoBehaviour
         
         //TODO: FARKLI PARENT
                                                                                                              
-        gridObjectItem.HandleSettingSubCellsType(grid, gridObjectItemDatas, x, y); 
+        gridObjectItem.HandleSettingSubCellsType(grid, gridObjectItemDatas, x, y, _gridGroupsData); 
         //callback?.Invoke(gridObjectItemDatas);
 
         var gridObject = new GridObject<GridObjectItem>(grid, x, y);

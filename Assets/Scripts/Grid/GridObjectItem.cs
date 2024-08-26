@@ -26,15 +26,15 @@ public class GridObjectItem : MonoBehaviour
         //GridBoardEventSystem.SetGridObjectItemType -= HandleSettingSubCellsType;
     }
 
-    public void HandleSettingSubCellsType(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y)
+    public void HandleSettingSubCellsType(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y, List<GridGroup> gridGroupData)
     {
         _gridObjectItemXPosition = x;
         _gridObjectItemYPosition = y;
 
-        SetSubCells(grid, gridObjectItemDatas, _gridObjectItemXPosition, _gridObjectItemYPosition);
+        SetSubCells(grid, gridObjectItemDatas, _gridObjectItemXPosition, _gridObjectItemYPosition, gridGroupData);
     }
 
-    private void SetSubCells(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y)
+    private void SetSubCells(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y, List<GridGroup> gridGroupData)
     {
         foreach (GridObjecItemSubCell subCell in _gridObjecItemSubCells)
         {
@@ -46,12 +46,41 @@ public class GridObjectItem : MonoBehaviour
                 //subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
                 SetInitialTopSubCell(grid, subCell, gridObjectItemDatas, x, y);
             }
-            else // other cells
+            else if(subCell.id == 1)// other cells
             {
-                subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas)); //TODO: IMPROVE RANDOM ALGORITHM
+                //subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas)); //TODO: IMPROVE RANDOM ALGORITHM
+                SetOtherSubCellWithGroup(subCell, subCell.id - 1, gridGroupData, x, y, gridObjectItemDatas);
+            }
+            else if(subCell.id == 2)
+            {
+                SetOtherSubCellWithGroup(subCell, subCell.id - 1, gridGroupData, x, y, gridObjectItemDatas);
             }
 
             subCell.cellManager.gridObjectItem = this;
+        }
+    }
+
+    private void SetOtherSubCellWithGroup(GridObjecItemSubCell subCell, int subCellLayer, List<GridGroup> gridGroupData, int x, int y, GridObjectItemData[] gridObjectItemDatas)
+    {
+        GridGroup gridGroup = gridGroupData[subCellLayer];
+
+        foreach (var group in gridGroup.group)
+        {
+            List<GridPosition> groupPosition = group.groupPosition;
+
+            foreach (var position in groupPosition)
+            {
+                if (x == position.x && y == position.y)
+                {
+                    subCell.cellManager.SetSubCellColor(group.gridObjectItemData);
+                }
+                else if(!subCell.cellManager.isPainted)
+                {
+                    //subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
+                    subCell.cellManager.isPainted = true;
+                    Debug.Log("random color created");
+                }
+            }
         }
     }
 
@@ -102,15 +131,15 @@ public class GridObjectItem : MonoBehaviour
             float randomValue = UnityEngine.Random.Range(0f, 1f);
             if (randomValue <= 0.4f)
             {
-                TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.FROG);
+                //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.FROG);
             }
             else
             {
-                TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
+                //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
             }
         }
-        else
-            TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
+        //else
+            //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
     }
 
     private void ChangeTopGridObjectItemCell(GridObjecItemSubCell topGridObjectItemCell)

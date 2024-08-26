@@ -9,6 +9,7 @@ public class SubCellManager : MonoBehaviour
     public GridObjectItem gridObjectItem;
     public GridObjectItemData SubCellItemData;
     public MeshRenderer SubCellMeshRenderer;
+    public bool isPainted = false;
 
     /// <summary>
     /// This is unnecessary since we will only interact with the frog in this game.
