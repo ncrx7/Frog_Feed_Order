@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GrapeManager : MonoBehaviour, IGridObjectItemInteractable
 {
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] Texture _frogTexture;
+    public float moveDuration = 1f;
+
     private SubCellManager _subCellBelongsTo;
 
     public void SetGrapeColor(GridObjectItemData SubCellItemData)
@@ -33,5 +36,10 @@ public class GrapeManager : MonoBehaviour, IGridObjectItemInteractable
     public void Interact()
     {
         Debug.LogWarning("You can not click the grapes!!");
+    }
+
+    public void MoveToTarget(Vector3 targetPosition)
+    {
+        transform.DOMove(targetPosition, moveDuration).SetEase(Ease.Linear);
     }
 }

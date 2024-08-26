@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 513591429973482066}
   _frogTexture: {fileID: 0}
+  moveDuration: 1
 --- !u!65 &1224476797715105707
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -118,5 +119,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.63336253, y: 0.5062599, z: 0.6215816}
-  m_Center: {x: -0.0001603663, y: 0.014140509, z: 0.055995464}
+  m_Size: {x: 0.882982, y: 0.76274806, z: 0.85287505}
+  m_Center: {x: 0.008391514, y: 0.063636035, z: 0.081415445}

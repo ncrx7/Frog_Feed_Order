@@ -11,6 +11,9 @@ public class GridObjectItem : MonoBehaviour
     public GridObjecItemSubCell TopGridObjectItemCell { get; set; }
     public GridObjectItemData CurrentGridObjectItemData { get; set; }
     HashSet<int> _dataUsedIndices = new HashSet<int>();
+
+    private int _gridObjectItemXPosition;
+    private int _gridObjectItemYPosition;
     //public ItemType itemType;
 
     private void OnEnable()
@@ -25,7 +28,10 @@ public class GridObjectItem : MonoBehaviour
 
     public void HandleSettingSubCellsType(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y)
     {
-        SetSubCells(grid, gridObjectItemDatas, x, y);
+        _gridObjectItemXPosition = x;
+        _gridObjectItemYPosition = y;
+
+        SetSubCells(grid, gridObjectItemDatas, _gridObjectItemXPosition, _gridObjectItemYPosition);
     }
 
     private void SetSubCells(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y)
@@ -42,8 +48,10 @@ public class GridObjectItem : MonoBehaviour
             }
             else // other cells
             {
-                subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
+                subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas)); //TODO: IMPROVE RANDOM ALGORITHM
             }
+
+            subCell.cellManager.gridObjectItem = this;
         }
     }
 
@@ -68,21 +76,47 @@ public class GridObjectItem : MonoBehaviour
                 if (previousGridObjectItemSubCell.id == 0)
                 {
                     SubCellManager previousGridObjectItemTopSubCell = previousGridObjectItemSubCell.cellManager;
-                    previousGridObjectTopSubCellItemData = previousGridObjectItemTopSubCell.SubCellItemData; 
+                    previousGridObjectTopSubCellItemData = previousGridObjectItemTopSubCell.SubCellItemData;
                 }
             }
 
-            TopGridObjectItemCell.cellManager.SetSubCellColor(previousGridObjectTopSubCellItemData); 
+            TopGridObjectItemCell.cellManager.SetSubCellColor(previousGridObjectTopSubCellItemData);
             TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
         }
     }
 
-    private void ResetSubCellID()
+    public void ResetSubCellID()
     {
+        _gridObjecItemSubCells.RemoveAt(0);
+
         for (int i = 0; i < _gridObjecItemSubCells.Count; i++)
         {
             _gridObjecItemSubCells[i].id = i;
+
+            if (i == 0)
+                ChangeTopGridObjectItemCell(_gridObjecItemSubCells[i]);
         }
+
+        if (CheckIsBoundaryGridObject())
+        {
+            float randomValue = UnityEngine.Random.Range(0f, 1f);
+            if (randomValue <= 0.4f)
+            {
+                TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.FROG);
+            }
+            else
+            {
+                TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
+            }
+        }
+        else
+            TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
+    }
+
+    private void ChangeTopGridObjectItemCell(GridObjecItemSubCell topGridObjectItemCell)
+    {
+        TopGridObjectItemCell = topGridObjectItemCell;
+        //Debug.Log("new top subcell: " + topGridObjectItemCell);
     }
 
     private GridObjectItemData GetRandomGridObjectItemType(GridObjectItemData[] gridObjectItemDatas)
@@ -113,6 +147,13 @@ public class GridObjectItem : MonoBehaviour
     {
         return _gridObjecItemSubCells;
     }
+
+    private bool CheckIsBoundaryGridObject()
+    {
+        return _gridObjectItemXPosition == 0 || _gridObjectItemYPosition == 0
+        || _gridObjectItemXPosition == GridBoardManager.Instance.GetWidth() - 1 || _gridObjectItemYPosition == GridBoardManager.Instance.GetHeight() - 1;
+    }
+
 }
 
 [Serializable]

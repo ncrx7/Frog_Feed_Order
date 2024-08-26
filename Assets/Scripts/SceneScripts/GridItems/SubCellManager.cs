@@ -6,6 +6,7 @@ public class SubCellManager : MonoBehaviour
 {
     public ItemColorType SubCellColorType;
     public CellItemType CurrentSubCellItemType;
+    public GridObjectItem gridObjectItem;
     public GridObjectItemData SubCellItemData;
     public MeshRenderer SubCellMeshRenderer;
 

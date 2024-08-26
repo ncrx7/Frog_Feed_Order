@@ -855,7 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af8e3f14cae94a42adda7f4e354f70c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialPoolSize: 15
+  _initialPoolSize: 25
   _frogPrefab: {fileID: 7143079532818589386, guid: 32453a18c791f9c4e8bd25285ba76329,
     type: 3}
 --- !u!1001 &5216775110502913633

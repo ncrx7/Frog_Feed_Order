@@ -15,6 +15,23 @@ public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
         SetFrogRotation(FrogRotationType.UP);
     }
 
+    private void FindAFrogDirection(GridSystem<GridObject<GridObjectItem>> grid, int x, int y)
+    {
+        //GridObjectItem[] gridObjectItems; //CurrentSubCellItemType
+        List<GridObjectItem> gridObjectItems = new List<GridObjectItem>
+        {
+            grid.GetValue(x + 1, y).GetValue(),
+            grid.GetValue(x - 1, y).GetValue(),
+            grid.GetValue(x, y + 1).GetValue(),
+            grid.GetValue(x, y -1).GetValue()
+        };
+
+        foreach (GridObjectItem item in gridObjectItems)
+        {
+            //to be continue
+        }
+    }
+
     public void SetFrogColor(GridObjectItemData SubCellItemData)
     {
         if (SubCellItemData == null || _skinnedMeshRenderer == null)
@@ -27,6 +44,7 @@ public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
         _skinnedMeshRenderer.material.mainTexture = SubCellItemData.FrogTexture;
     }
 
+    
     public void SetFrogRotation(FrogRotationType frogRotationType)
     {
         _frogRotationType = frogRotationType;

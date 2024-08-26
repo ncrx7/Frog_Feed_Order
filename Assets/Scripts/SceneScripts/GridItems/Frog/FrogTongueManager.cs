@@ -22,7 +22,7 @@ public class FrogTongueManager : MonoBehaviour
     private bool _isReturning = false;
     private bool _tongueMoveFinished = false;
     private bool _isCollectingFinishSuccess;
-    private HashSet<GameObject> _correctObjects = new HashSet<GameObject>();
+    private HashSet<GameObject> _grapeObjects = new HashSet<GameObject>();
 
     void Start()
     {
@@ -77,7 +77,7 @@ public class FrogTongueManager : MonoBehaviour
                     {
                         if (_frogManager.GetSubCellBelonging().SubCellColorType == grapeManager.GetSubCellBelonging().SubCellColorType)
                         {
-                            _correctObjects.Add(hit.collider.gameObject);
+                            _grapeObjects.Add(hit.collider.gameObject);
                         }
                         else
                         {
@@ -91,6 +91,10 @@ public class FrogTongueManager : MonoBehaviour
                 {
                     _isReturning = true;
                     _isCollectingFinishSuccess = true;
+                    foreach (var grape in _grapeObjects)
+                    {
+                        grape.GetComponent<GrapeManager>().MoveToTarget(transform.position);
+                    }
                 }
 
                 _lineRenderer.SetPosition(1, _tongueEndPoint);
@@ -102,7 +106,7 @@ public class FrogTongueManager : MonoBehaviour
 
                 if (_tongueEndPoint == _tongueStartPoint.position)
                 {
-                    if (_correctObjects.Count > 0 && _isCollectingFinishSuccess)
+                    if (_grapeObjects.Count > 0 && _isCollectingFinishSuccess)
                     {
                         CollectCorrectObjects();
                     }
@@ -120,31 +124,35 @@ public class FrogTongueManager : MonoBehaviour
 
     private void CollectCorrectObjects()
     {
-        foreach (GameObject obj in _correctObjects)
+        foreach (GameObject obj in _grapeObjects)
         {
             Debug.Log("Collected: " + obj.name);
 
             GrapeManager grapeManager = obj.GetComponent<GrapeManager>();
 
             SubCellManager grapeSubCell = grapeManager.GetSubCellBelonging();
-            SubCellManager frogSubCell = _frogManager.GetSubCellBelonging();
 
             //I am destroying top subcell. I dont use cell pool because subcells is instantiating only once in game
             Destroy(grapeSubCell.gameObject);
-            Destroy(frogSubCell.gameObject);
 
             //TODO: SET NEW TOP CELL AND SPAWN NEW FROG OR GRAP
+            
+            grapeSubCell.gridObjectItem.ResetSubCellID();
 
             GrapePoolManager.Instance.ReturnGrapeObject(grapeManager);
             FrogPoolManager.Instance.ReturnFrogObject(_frogManager);
         }
+
+        SubCellManager frogSubCell = _frogManager.GetSubCellBelonging();
+        frogSubCell.gridObjectItem.ResetSubCellID();
+        Destroy(frogSubCell.gameObject);
     }
 
     private void ResetTongue()
     {
         _isReturning = false;
         _currentTongueLength = 0f;
-        _correctObjects.Clear();
+        _grapeObjects.Clear();
         _lineRenderer.SetPosition(0, _tongueStartPoint.position);
         _lineRenderer.SetPosition(1, _tongueStartPoint.position);
     }
