@@ -72,13 +72,11 @@ public class GridObjectItem : MonoBehaviour
             {
                 if (x == position.x && y == position.y)
                 {
+                    //_groupBelongsTo = group;
+
                     subCell.cellManager.SetSubCellColor(group.gridObjectItemData);
-                }
-                else if(!subCell.cellManager.isPainted)
-                {
-                    //subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
-                    subCell.cellManager.isPainted = true;
-                    Debug.Log("random color created");
+                    subCell.cellManager.SetSubCellItemType(position.cellItemType);
+                    subCell.cellManager.SetCellGroup(group);
                 }
             }
         }
@@ -92,6 +90,7 @@ public class GridObjectItem : MonoBehaviour
         {
             TopGridObjectItemCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
             TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.FROG);
+            TopGridObjectItemCell.cellManager.CreateSubCellItem();
         }
         else // I initially assigned the color of the top cell of the grid object below it to the top cell of each grid object except the bottom one.
         {
@@ -111,6 +110,8 @@ public class GridObjectItem : MonoBehaviour
 
             TopGridObjectItemCell.cellManager.SetSubCellColor(previousGridObjectTopSubCellItemData);
             TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
+
+            TopGridObjectItemCell.cellManager.CreateSubCellItem();
         }
     }
 
@@ -126,7 +127,11 @@ public class GridObjectItem : MonoBehaviour
                 ChangeTopGridObjectItemCell(_gridObjecItemSubCells[i]);
         }
 
-        if (CheckIsBoundaryGridObject())
+        if(_gridObjecItemSubCells.Count <= 0)
+            return;
+
+        TopGridObjectItemCell.cellManager.CreateSubCellItem();
+/*         if (CheckIsBoundaryGridObject())
         {
             float randomValue = UnityEngine.Random.Range(0f, 1f);
             if (randomValue <= 0.4f)
@@ -137,7 +142,7 @@ public class GridObjectItem : MonoBehaviour
             {
                 //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
             }
-        }
+        } */
         //else
             //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
     }

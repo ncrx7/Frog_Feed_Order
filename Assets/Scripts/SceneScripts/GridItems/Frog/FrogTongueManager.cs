@@ -72,9 +72,10 @@ public class FrogTongueManager : MonoBehaviour
                         _isReturning = true;
                     } */
 
-
+                    Debug.Log("tongue hitted - non same object");
                     if (hit.collider.TryGetComponent<GrapeManager>(out GrapeManager grapeManager))
                     {
+                        Debug.Log("tongue hitted to grape");
                         if (_frogManager.GetSubCellBelonging().SubCellColorType == grapeManager.GetSubCellBelonging().SubCellColorType)
                         {
                             _grapeObjects.Add(hit.collider.gameObject);
@@ -93,7 +94,7 @@ public class FrogTongueManager : MonoBehaviour
                     _isCollectingFinishSuccess = true;
                     foreach (var grape in _grapeObjects)
                     {
-                        grape.GetComponent<GrapeManager>().MoveToTarget(transform.position);
+                        grape.GetComponent<GrapeManager>().MoveToTarget(transform.position); //TODO: SET TONGUE SPEED TO MOVING OBJECT SPEED
                     }
                 }
 
@@ -118,7 +119,7 @@ public class FrogTongueManager : MonoBehaviour
                 }
             }
 
-            yield return null;
+            yield return new WaitForSeconds(1/1200f);
         }
     }
 
@@ -133,7 +134,7 @@ public class FrogTongueManager : MonoBehaviour
             SubCellManager grapeSubCell = grapeManager.GetSubCellBelonging();
 
             //I am destroying top subcell. I dont use cell pool because subcells is instantiating only once in game
-            Destroy(grapeSubCell.gameObject);
+            
 
             //TODO: SET NEW TOP CELL AND SPAWN NEW FROG OR GRAP
             
@@ -141,6 +142,7 @@ public class FrogTongueManager : MonoBehaviour
 
             GrapePoolManager.Instance.ReturnGrapeObject(grapeManager);
             FrogPoolManager.Instance.ReturnFrogObject(_frogManager);
+            Destroy(grapeSubCell.gameObject);
         }
 
         SubCellManager frogSubCell = _frogManager.GetSubCellBelonging();

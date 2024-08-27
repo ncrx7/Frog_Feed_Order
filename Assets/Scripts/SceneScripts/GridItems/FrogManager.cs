@@ -12,7 +12,7 @@ public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
 
     private void Start()
     {
-        SetFrogRotation(FrogRotationType.UP);
+        //SetFrogRotation(FrogRotationType.UP);
     }
 
     private void FindAFrogDirection(GridSystem<GridObject<GridObjectItem>> grid, int x, int y)

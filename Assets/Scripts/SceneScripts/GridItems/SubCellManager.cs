@@ -9,6 +9,7 @@ public class SubCellManager : MonoBehaviour
     public GridObjectItem gridObjectItem;
     public GridObjectItemData SubCellItemData;
     public MeshRenderer SubCellMeshRenderer;
+     private Group _groupBelongsTo;
     public bool isPainted = false;
 
     /// <summary>
@@ -27,10 +28,15 @@ public class SubCellManager : MonoBehaviour
     public void SetSubCellItemType(CellItemType cellItemType)
     {
         CurrentSubCellItemType = cellItemType;
-        CreateSubCellItem();
+        //CreateSubCellItem();
     }
 
-    private void CreateSubCellItem()
+    public void SetCellGroup(Group group)
+    {
+        _groupBelongsTo = group;
+    }
+
+    public void CreateSubCellItem()
     {
         switch (CurrentSubCellItemType)
         {
@@ -39,6 +45,14 @@ public class SubCellManager : MonoBehaviour
                 frogManager.SetFrogColor(SubCellItemData);
                 frogManager.SetSubCellBelonging(this);
                 frogManager.transform.position = transform.position;
+
+                if(_groupBelongsTo == null)
+                    frogManager.SetFrogRotation(FrogRotationType.UP);
+                else
+                {
+                    frogManager.SetFrogRotation(_groupBelongsTo.frogRotationType);
+                }
+
                 gridObjectItemInteractable = frogManager;
                 //get frog from frog pool
                 break;
