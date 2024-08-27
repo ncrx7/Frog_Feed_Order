@@ -24,16 +24,16 @@ MonoBehaviour:
       cellItemType: 0
     - x: 4
       y: 1
-      cellItemType: 0
+      cellItemType: 1
     - x: 4
       y: 2
-      cellItemType: 0
+      cellItemType: 1
     - x: 4
       y: 3
-      cellItemType: 0
+      cellItemType: 1
     - x: 4
       y: 4
-      cellItemType: 0
+      cellItemType: 1
     gridObjectItemData: {fileID: 11400000, guid: cad0a844362db62429f23dc5164ac7ef,
       type: 2}
   - frogRotationType: 3
@@ -47,16 +47,16 @@ MonoBehaviour:
       cellItemType: 0
     - x: 2
       y: 3
-      cellItemType: 0
+      cellItemType: 1
     - x: 2
       y: 2
-      cellItemType: 0
+      cellItemType: 1
     - x: 2
       y: 1
-      cellItemType: 0
+      cellItemType: 1
     - x: 2
       y: 0
-      cellItemType: 0
+      cellItemType: 1
     gridObjectItemData: {fileID: 11400000, guid: 80a4c315999e8f74690901a95d475d79,
       type: 2}
   - frogRotationType: 3
@@ -67,13 +67,13 @@ MonoBehaviour:
     groupPosition:
     - x: 0
       y: 0
-      cellItemType: 0
+      cellItemType: 1
     - x: 1
       y: 1
-      cellItemType: 0
+      cellItemType: 1
     - x: 3
       y: 3
-      cellItemType: 0
+      cellItemType: 1
     gridObjectItemData: {fileID: 11400000, guid: 74438a71827bbf84fa99a2b2fa5e4d2d,
       type: 2}
   - frogRotationType: 3
@@ -87,16 +87,16 @@ MonoBehaviour:
       cellItemType: 0
     - x: 0
       y: 2
-      cellItemType: 0
+      cellItemType: 1
     - x: 0
       y: 1
-      cellItemType: 0
+      cellItemType: 2
     - x: 1
       y: 2
-      cellItemType: 0
+      cellItemType: 1
     - x: 3
       y: 4
-      cellItemType: 0
+      cellItemType: 1
     gridObjectItemData: {fileID: 11400000, guid: 13aca694f51df854dbf71ac3ab661569,
       type: 2}
   - frogRotationType: 2
@@ -110,16 +110,16 @@ MonoBehaviour:
       cellItemType: 0
     - x: 3
       y: 0
-      cellItemType: 0
+      cellItemType: 1
     - x: 3
       y: 1
-      cellItemType: 0
+      cellItemType: 1
     - x: 1
       y: 3
-      cellItemType: 0
+      cellItemType: 1
     - x: 0
       y: 4
-      cellItemType: 0
+      cellItemType: 1
     gridObjectItemData: {fileID: 11400000, guid: 8138c6c28336ba84599fe496190dbc73,
       type: 2}
   - frogRotationType: 2
@@ -130,9 +130,9 @@ MonoBehaviour:
     groupPosition:
     - x: 3
       y: 2
-      cellItemType: 0
+      cellItemType: 2
     - x: 1
       y: 4
-      cellItemType: 0
+      cellItemType: 1
     gridObjectItemData: {fileID: 11400000, guid: cad0a844362db62429f23dc5164ac7ef,
       type: 2}
