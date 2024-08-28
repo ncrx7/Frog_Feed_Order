@@ -65,7 +65,10 @@ public class SubCellManager : MonoBehaviour
                 //get grape from grape pool
                 break;
             case CellItemType.ARROW:
-                //get arrow from arrow pool
+                ArrowManager arrowManager = ArrowPoolManager.Instance.GetArrowObject();
+                arrowManager.SetArrowColor(SubCellItemData);
+                arrowManager.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+                gridObjectItemInteractable = arrowManager;
                 break;
             default:
                 Debug.LogWarning("Undefined cell item type");

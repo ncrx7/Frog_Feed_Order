@@ -8,5 +8,6 @@ public class GridObjectItemData : ScriptableObject
     public Texture CellTexture;
     public Texture FrogTexture;
     public Texture GrapeTexture;
+    public Color color;
     public ItemColorType ItemColorType;
 }

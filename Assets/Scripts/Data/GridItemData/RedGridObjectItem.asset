@@ -15,4 +15,5 @@ MonoBehaviour:
   CellTexture: {fileID: 2800000, guid: e9b54e64689f232409ff8c095d2489cc, type: 3}
   FrogTexture: {fileID: 2800000, guid: f19c87f698ffe7949930e2ab75197992, type: 3}
   GrapeTexture: {fileID: 2800000, guid: 6b3309cf7853bb146ae68b76b84aa505, type: 3}
+  color: {r: 1, g: 0.17254902, b: 0.043137256, a: 1}
   ItemColorType: 1
