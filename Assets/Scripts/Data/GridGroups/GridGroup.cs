@@ -17,7 +17,7 @@ public class GridGroup : ScriptableObject
 
 public class Group
 {
-    public FrogRotationType frogRotationType; // each group has a frog
+    public RotationTypes frogRotationType; // each group has a frog
     public GridPosition frogPositionOnGrid;
     public List<GridPosition> groupPosition = new List<GridPosition>();
     public GridObjectItemData gridObjectItemData;

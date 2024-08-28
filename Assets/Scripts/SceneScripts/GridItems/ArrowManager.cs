@@ -5,7 +5,9 @@ using UnityEngine;
 public class ArrowManager : MonoBehaviour, IGridObjectItemInteractable
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private RotationTypes _arrowRotationType;
     private SubCellManager _subCellBelongsTo;
+    public Vector3 routeDirection;
 
     public void SetArrowColor(GridObjectItemData SubCellItemData)
     {
@@ -16,6 +18,51 @@ public class ArrowManager : MonoBehaviour, IGridObjectItemInteractable
         }
 
         _spriteRenderer.color = SubCellItemData.color;
+    }
+
+    public void SetArrowRotation(RotationTypes arrowRotationType)
+    {
+        _arrowRotationType = arrowRotationType;
+
+        Quaternion targetRotation = Quaternion.identity;
+
+        switch (_arrowRotationType)
+        {
+            case RotationTypes.UP:
+                targetRotation = Quaternion.Euler(90, 270, 0);
+                break;
+
+            case RotationTypes.LEFT:
+                targetRotation = Quaternion.Euler(90, 180, 0);
+                break;
+
+            case RotationTypes.RIGHT:
+                targetRotation = Quaternion.Euler(90, 0, 0);
+                break;
+
+            case RotationTypes.DOWN:
+                targetRotation = Quaternion.Euler(90, 90, 0);
+                break;
+
+            case RotationTypes.UP_RIGHT:
+                targetRotation = Quaternion.Euler(90, 315, 0);
+                break;
+
+            case RotationTypes.UP_LEFT:
+                targetRotation = Quaternion.Euler(90, 225, 0);
+                break;
+
+            case RotationTypes.DOWN_LEFT:
+                targetRotation = Quaternion.Euler(90, 135, 0);
+                break;
+
+            case RotationTypes.DOWN_RIGHT:
+                targetRotation = Quaternion.Euler(90, 45, 0);
+                break;
+        }
+
+        transform.rotation = targetRotation;
+        routeDirection = targetRotation * Vector3.forward;
     }
 
     public void SetSubCellBelonging(SubCellManager subCellManager)

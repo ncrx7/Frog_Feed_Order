@@ -47,7 +47,7 @@ public class SubCellManager : MonoBehaviour
                 frogManager.transform.position = transform.position;
 
                 if(_groupBelongsTo == null)
-                    frogManager.SetFrogRotation(FrogRotationType.UP);
+                    frogManager.SetFrogRotation(RotationTypes.UP);
                 else
                 {
                     frogManager.SetFrogRotation(_groupBelongsTo.frogRotationType);
@@ -68,6 +68,7 @@ public class SubCellManager : MonoBehaviour
                 ArrowManager arrowManager = ArrowPoolManager.Instance.GetArrowObject();
                 arrowManager.SetArrowColor(SubCellItemData);
                 arrowManager.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+                //rotation
                 gridObjectItemInteractable = arrowManager;
                 break;
             default:

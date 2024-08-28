@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
 {
-    [SerializeField] private FrogRotationType _frogRotationType;
+    [SerializeField] private RotationTypes _frogRotationType;
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
     [SerializeField] Texture _frogTexture;
     [SerializeField] private FrogTongueManager _frogTongueManager;
@@ -13,23 +13,6 @@ public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
     private void Start()
     {
         //SetFrogRotation(FrogRotationType.UP);
-    }
-
-    private void FindAFrogDirection(GridSystem<GridObject<GridObjectItem>> grid, int x, int y)
-    {
-        //GridObjectItem[] gridObjectItems; //CurrentSubCellItemType
-        List<GridObjectItem> gridObjectItems = new List<GridObjectItem>
-        {
-            grid.GetValue(x + 1, y).GetValue(),
-            grid.GetValue(x - 1, y).GetValue(),
-            grid.GetValue(x, y + 1).GetValue(),
-            grid.GetValue(x, y -1).GetValue()
-        };
-
-        foreach (GridObjectItem item in gridObjectItems)
-        {
-            //to be continue
-        }
     }
 
     public void SetFrogColor(GridObjectItemData SubCellItemData)
@@ -45,7 +28,7 @@ public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
     }
 
     
-    public void SetFrogRotation(FrogRotationType frogRotationType)
+    public void SetFrogRotation(RotationTypes frogRotationType)
     {
         _frogRotationType = frogRotationType;
 
@@ -53,35 +36,35 @@ public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
 
         switch (_frogRotationType)
         {
-            case FrogRotationType.UP:
+            case RotationTypes.UP:
                 targetRotation = Quaternion.Euler(0, 180, 0);
                 break;
 
-            case FrogRotationType.LEFT:
+            case RotationTypes.LEFT:
                 targetRotation = Quaternion.Euler(0, 90, 0);
                 break;
 
-            case FrogRotationType.RIGHT:
+            case RotationTypes.RIGHT:
                 targetRotation = Quaternion.Euler(0, 270, 0);
                 break;
 
-            case FrogRotationType.DOWN:
+            case RotationTypes.DOWN:
                 targetRotation = Quaternion.Euler(0, 0, 0);
                 break;
 
-            case FrogRotationType.UP_RIGHT:
+            case RotationTypes.UP_RIGHT:
                 targetRotation = Quaternion.Euler(0, 225, 0);
                 break;
 
-            case FrogRotationType.UP_LEFT:
+            case RotationTypes.UP_LEFT:
                 targetRotation = Quaternion.Euler(0, 135, 0);
                 break;
 
-            case FrogRotationType.DOWN_LEFT:
+            case RotationTypes.DOWN_LEFT:
                 targetRotation = Quaternion.Euler(0, 45, 0);
                 break;
 
-            case FrogRotationType.DOWN_RIGHT:
+            case RotationTypes.DOWN_RIGHT:
                 targetRotation = Quaternion.Euler(0, 315, 0);
                 break;
         }
@@ -105,7 +88,7 @@ public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
     }
 }
 
-public enum FrogRotationType
+public enum RotationTypes
 {
     UP,
     LEFT,
