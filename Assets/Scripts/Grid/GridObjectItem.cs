@@ -43,15 +43,15 @@ public class GridObjectItem : MonoBehaviour
 
             if (subCell.id == 0) // Toppest Cells
             {
-                //subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
+                subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
                 SetInitialTopSubCell(grid, subCell, gridObjectItemDatas, x, y);
             }
-            else if(subCell.id == 1)// other cells
+            else if (subCell.id == 1)// other cells
             {
-                //subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas)); //TODO: IMPROVE RANDOM ALGORITHM
+                subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas)); //TODO: IMPROVE RANDOM ALGORITHM
                 SetOtherSubCellWithGroup(subCell, subCell.id - 1, gridGroupData, x, y, gridObjectItemDatas);
             }
-            else if(subCell.id == 2)
+            else if (subCell.id == 2)
             {
                 SetOtherSubCellWithGroup(subCell, subCell.id - 1, gridGroupData, x, y, gridObjectItemDatas);
             }
@@ -62,23 +62,33 @@ public class GridObjectItem : MonoBehaviour
 
     private void SetOtherSubCellWithGroup(GridObjecItemSubCell subCell, int subCellLayer, List<GridGroup> gridGroupData, int x, int y, GridObjectItemData[] gridObjectItemDatas)
     {
-        GridGroup gridGroup = gridGroupData[subCellLayer];
+        GridGroup layerGroups = gridGroupData[subCellLayer];
 
-        foreach (var group in gridGroup.group)
+        foreach (var group in layerGroups.groups)
         {
-            List<GridPosition> groupPosition = group.groupPosition;
+            //List<GridPosition> groupPosition = group.groupPosition;
 
-            foreach (var position in groupPosition)
+            foreach (var item in group.items)
             {
-                if (x == position.x && y == position.y)
+                if (x == item.gridPosition.x && y == item.gridPosition.y)
                 {
-                    //_groupBelongsTo = group;
-
                     subCell.cellManager.SetSubCellColor(group.gridObjectItemData);
-                    subCell.cellManager.SetSubCellItemType(position.cellItemType);
-                    subCell.cellManager.SetCellGroup(group);
+                    subCell.cellManager.SetSubCellItemType(item.cellItemType);
+                    subCell.cellManager.SetCellItem(item);
                 }
             }
+
+            /*             foreach (var position in groupPosition)
+                        {
+                            if (x == position.x && y == position.y)
+                            {
+                                //_groupBelongsTo = group;
+
+                                subCell.cellManager.SetSubCellColor(group.gridObjectItemData);
+                                subCell.cellManager.SetSubCellItemType(position.cellItemType);
+                                subCell.cellManager.SetCellGroup(group);
+                            }
+                        } */
         }
     }
 
@@ -127,24 +137,24 @@ public class GridObjectItem : MonoBehaviour
                 ChangeTopGridObjectItemCell(_gridObjecItemSubCells[i]);
         }
 
-        if(_gridObjecItemSubCells.Count <= 0)
+        if (_gridObjecItemSubCells.Count <= 0)
             return;
 
         TopGridObjectItemCell.cellManager.CreateSubCellItem();
-/*         if (CheckIsBoundaryGridObject())
-        {
-            float randomValue = UnityEngine.Random.Range(0f, 1f);
-            if (randomValue <= 0.4f)
-            {
-                //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.FROG);
-            }
-            else
-            {
-                //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
-            }
-        } */
+        /*         if (CheckIsBoundaryGridObject())
+                {
+                    float randomValue = UnityEngine.Random.Range(0f, 1f);
+                    if (randomValue <= 0.4f)
+                    {
+                        //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.FROG);
+                    }
+                    else
+                    {
+                        //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
+                    }
+                } */
         //else
-            //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
+        //TopGridObjectItemCell.cellManager.SetSubCellItemType(CellItemType.GRAPE);
     }
 
     private void ChangeTopGridObjectItemCell(GridObjecItemSubCell topGridObjectItemCell)

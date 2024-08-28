@@ -7,6 +7,13 @@ public class CreateGridObjectItemManager : MonoBehaviour
 {
     [SerializeField] private List<GridGroup> _gridGroupsData = new List<GridGroup>();
 
+    private void Awake()
+    {
+        InitializeGridGroupData();
+
+        Debug.Log("fasdklşasdas: " + _gridGroupsData[0].groups[0].items[1].gridPosition.x + _gridGroupsData[0].groups[0].items[1].cellItemType);
+    }
+
     private void OnEnable()
     {
         GridBoardEventSystem.CreateGridObjectItem += HandleCreatingGridObjectItem;
@@ -31,5 +38,16 @@ public class CreateGridObjectItemManager : MonoBehaviour
         var gridObject = new GridObject<GridObjectItem>(grid, x, y);
         gridObject.SetValue(gridObjectItem); 
         grid.SetValue(x, y, gridObject); 
+    }
+
+    private void InitializeGridGroupData()
+    {
+        foreach (var layerData in _gridGroupsData)
+        {
+            foreach (var item in layerData.groups)
+            {
+                item.AddItemsToList();
+            }
+        }
     }
 }
