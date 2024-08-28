@@ -45,7 +45,6 @@ public class ClickManager : MonoBehaviour
 
     private void HandleClick()
     {
-        Debug.Log("clicked");
         if (!_isProcessing && !IsPausedGame && SwapAmount > 0)
         {
             var gridPos = grid.GetXY(Camera.main.ScreenToWorldPoint(InputManager.Instance.MousePosition));

@@ -42,7 +42,6 @@ public class InputManager : MonoBehaviour
 
     private void OnFired(InputAction.CallbackContext obj)
     {
-        Debug.Log("onfired");
         GridBoardEventSystem.ClickEvent?.Invoke();
         //ClickEvent?.Invoke();
     }

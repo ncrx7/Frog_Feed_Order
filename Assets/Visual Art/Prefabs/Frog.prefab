@@ -2103,14 +2103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lineRenderer: {fileID: 6250016745546184781}
   _tongueStartPoint: {fileID: 5556669665675288544}
-  _maxTongueLength: 10
+  direction: {x: 0, y: 0, z: 0}
+  _maxTongueLength: 12
   _tongueExtendSpeed: 5
-  _correctLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  _incorrectLayerMask:
-    serializedVersion: 2
-    m_Bits: 16
   _frogManager: {fileID: 3268120667244737721}
 --- !u!120 &6250016745546184781
 LineRenderer:

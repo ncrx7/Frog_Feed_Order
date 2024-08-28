@@ -10,8 +10,6 @@ public class CreateGridObjectItemManager : MonoBehaviour
     private void Awake()
     {
         InitializeGridGroupData();
-
-        Debug.Log("fasdklşasdas: " + _gridGroupsData[0].groups[0].items[1].gridPosition.x + _gridGroupsData[0].groups[0].items[1].cellItemType);
     }
 
     private void OnEnable()

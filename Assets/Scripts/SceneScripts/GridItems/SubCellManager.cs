@@ -68,11 +68,9 @@ public class SubCellManager : MonoBehaviour
             case CellItemType.ARROW:
                 ArrowManager arrowManager = ArrowPoolManager.Instance.GetArrowObject();
                 arrowManager.SetArrowColor(SubCellItemData);
-                arrowManager.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+                arrowManager.transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
                 //rotation
-                Debug.Log("cell item: " + _cellItem.cellItemType);
                 Arrow arrowItem = _cellItem as Arrow;
-                Debug.Log("arrow rotation: " + arrowItem.arrowRotationType);
                 arrowManager.SetArrowRotation(arrowItem.arrowRotationType);
                 gridObjectItemInteractable = arrowManager;
                 break;

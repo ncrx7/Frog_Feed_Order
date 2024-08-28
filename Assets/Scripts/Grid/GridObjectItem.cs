@@ -39,8 +39,6 @@ public class GridObjectItem : MonoBehaviour
         foreach (GridObjecItemSubCell subCell in _gridObjecItemSubCells)
         {
             //TODO: ADJUST THIS METHOD TO PREVENT SAME COLOR CELL ON A GRID OBJECT ITEM
-            Debug.Log("mesh process");
-
             if (subCell.id == 0) // Toppest Cells
             {
                 subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
