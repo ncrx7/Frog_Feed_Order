@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridObjectItemPoolManager : MonoBehaviour
 {
     public static GridObjectItemPoolManager Instance;
-    private ObjectPoolManager<GridObjectItem> _gridObjectItemPool;
+    private ObjectPoolManager<GridObjectCellManager> _gridObjectItemPool;
     [SerializeField] private int _initialPoolSize;
     [SerializeField] private GameObject _gridItemPrefab;
 
@@ -30,15 +30,15 @@ public class GridObjectItemPoolManager : MonoBehaviour
 
     private void CreatePool()
     {
-        _gridObjectItemPool = new ObjectPoolManager<GridObjectItem>(_gridItemPrefab.GetComponent<GridObjectItem>(), _initialPoolSize, transform);
+        _gridObjectItemPool = new ObjectPoolManager<GridObjectCellManager>(_gridItemPrefab.GetComponent<GridObjectCellManager>(), _initialPoolSize, transform);
     }
 
-    public GridObjectItem GetGridObjectItem()
+    public GridObjectCellManager GetGridObjectItem()
     {
         return _gridObjectItemPool.GetObject();
     }
 
-    public void ReturnGridObjectItem(GridObjectItem gridObjectItem)
+    public void ReturnGridObjectItem(GridObjectCellManager gridObjectItem)
     {
         _gridObjectItemPool.ReturnObject(gridObjectItem);
     }

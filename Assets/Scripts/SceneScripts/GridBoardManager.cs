@@ -7,7 +7,7 @@ public class GridBoardManager : MonoBehaviour
     public static GridBoardManager Instance { get; private set; }
 
     [Header("Grid Settings")]
-    GridSystem<GridObject<GridObjectItem>> _grid;
+    GridSystem<GridObject<GridObjectCellManager>> _grid;
     [SerializeField] int _width = 5;
     [SerializeField] int _height = 5;
     [SerializeField] float _cellSize = 1f;
@@ -45,7 +45,7 @@ public class GridBoardManager : MonoBehaviour
 
     private void InitializeGridAndGems()
     {
-        _grid = GridSystem<GridObject<GridObjectItem>>.HorizontalGrid(_width, _height, _cellSize, _originPosition, _debug);
+        _grid = GridSystem<GridObject<GridObjectCellManager>>.HorizontalGrid(_width, _height, _cellSize, _originPosition, _debug);
 
         for (int x = 0; x < _width; x++)
         {
@@ -56,7 +56,7 @@ public class GridBoardManager : MonoBehaviour
         }
     }
 
-    public GridSystem<GridObject<GridObjectItem>> GetGridBoard()
+    public GridSystem<GridObject<GridObjectCellManager>> GetGridBoard()
     {
         return _grid;
     }

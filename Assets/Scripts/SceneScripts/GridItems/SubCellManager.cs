@@ -6,7 +6,7 @@ public class SubCellManager : MonoBehaviour
 {
     public ItemColorType SubCellColorType;
     public CellItemType CurrentSubCellItemType;
-    public GridObjectItem gridObjectItem;
+    public GridObjectCellManager gridObjectItem;
     public GridObjectItemData SubCellItemData;
     public MeshRenderer SubCellMeshRenderer;
     private Item _cellItem;
@@ -16,7 +16,7 @@ public class SubCellManager : MonoBehaviour
     /// This is unnecessary since we will only interact with the frog in this game.
     /// But I am using an interface so that interacting with more than one object on the board will be easier programmatically in the future.
     /// </summary>
-    public IGridObjectItemInteractable gridObjectItemInteractable;
+    public IGridObjectItemClickInteractable gridObjectItemInteractable;
 
     public void SetSubCellColor(GridObjectItemData subCellItemData)
     {

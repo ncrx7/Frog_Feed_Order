@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
+public class FrogManager : MonoBehaviour, IGridObjectItemClickInteractable
 {
     [SerializeField] private RotationTypes _frogRotationType;
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
@@ -82,12 +82,13 @@ public class FrogManager : MonoBehaviour, IGridObjectItemInteractable
         return _subCellBelongsTo;
     }
 
-    public void Interact()
+    public void ClickInteract()
     {
         _frogTongueManager.HandleFrogTongueMove();
     }
 }
 
+//TODO: MOVE THAT ANOTHER EMPTY CLASS, BECAUSE ARROW OBJECT ALSO USE THIS ENUM
 public enum RotationTypes
 {
     UP,

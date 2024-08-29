@@ -6,12 +6,12 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
-    public int PlayerLevel {get; private set;} = 3;
+    public int PlayerLevel { get; private set; } = 1;
     private int _maxPlayerLevel = 3;
     public int CellAmountCounter;
 
     //public Dictionary< int, List<GridGroup> > levelGridGroups = new Dictionary< int, List<GridGroup> >();
-    public List<LevelData> LevelDatas= new List<LevelData>();
+    public List<LevelData> LevelDatas = new List<LevelData>();
 
     private void Awake()
     {
@@ -24,12 +24,12 @@ public class LevelManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-       DontDestroyOnLoad(Instance);
+        DontDestroyOnLoad(Instance);
     }
 
     public void IncreaseLevel()
     {
-        if(PlayerLevel + 1 >= _maxPlayerLevel)
+        if (PlayerLevel + 1 > _maxPlayerLevel)
             return;
 
         PlayerLevel++;
@@ -41,10 +41,16 @@ public class LevelManager : MonoBehaviour
     {
         CellAmountCounter--;
 
-        if(CellAmountCounter <= 0)
+        if (CellAmountCounter <= 0)
         {
-            EventSystem.SwitchDefeatHudDisplay?.Invoke(HudType.VICTORY_HUD);
-            Debug.Log("WINN!!");
+            if (PlayerLevel == 3)
+            {
+                EventSystem.SwitchDefeatHudDisplay?.Invoke(HudType.FINISHEDGAME_HUD);
+            }
+            else
+            {
+                EventSystem.SwitchDefeatHudDisplay?.Invoke(HudType.VICTORY_HUD);
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class GrapeManager : MonoBehaviour, IGridObjectItemInteractable
+public class GrapeManager : MonoBehaviour, IGridObjectItemClickInteractable
 {
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] Texture _frogTexture;
@@ -33,7 +33,7 @@ public class GrapeManager : MonoBehaviour, IGridObjectItemInteractable
         return _subCellBelongsTo;
     }
 
-    public void Interact()
+    public void ClickInteract()
     {
         Debug.LogWarning("You can not click the grapes!!");
     }

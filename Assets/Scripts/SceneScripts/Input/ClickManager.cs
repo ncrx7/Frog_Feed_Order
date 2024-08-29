@@ -9,7 +9,7 @@ public class ClickManager : MonoBehaviour
     [Header("Player Control Capacity")]
     [SerializeField] private int _clickAmount;
 
-    GridSystem<GridObject<GridObjectItem>> grid;
+    GridSystem<GridObject<GridObjectCellManager>> grid;
 
     [Header("Click flags")]
     private bool _isProcessing = false;
@@ -58,13 +58,13 @@ public class ClickManager : MonoBehaviour
             var gridObject = grid.GetValue(gridPos.x, gridPos.y);
             var gridObjectItemObject = gridObject.GetValue();
 
-            GridObjectItem gridObjectItem = gridObjectItemObject.GetComponent<GridObjectItem>();
+            GridObjectCellManager gridObjectItem = gridObjectItemObject.GetComponent<GridObjectCellManager>();
             SubCellManager gridTopSubCellManager = gridObjectItem.TopGridObjectItemCell.cellManager;
 
             if (gridTopSubCellManager.gridObjectItemInteractable == null)
                 return;
 
-            gridTopSubCellManager.gridObjectItemInteractable.Interact();
+            gridTopSubCellManager.gridObjectItemInteractable.ClickInteract();
             //Debug.Log("gridobjectitem: " + gridObjectItem);
 
             //ReduceCickAmount();

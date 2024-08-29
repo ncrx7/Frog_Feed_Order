@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowManager : MonoBehaviour, IGridObjectItemInteractable
+public class ArrowManager : MonoBehaviour, IGridObjectItemClickInteractable
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private RotationTypes _arrowRotationType;
@@ -80,7 +80,7 @@ public class ArrowManager : MonoBehaviour, IGridObjectItemInteractable
         return _subCellBelongsTo;
     }
 
-    public void Interact()
+    public void ClickInteract()
     {
         Debug.LogWarning("You can not click the arrows!!");
     }

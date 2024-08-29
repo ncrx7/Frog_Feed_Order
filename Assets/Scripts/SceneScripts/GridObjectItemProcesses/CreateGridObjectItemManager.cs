@@ -22,9 +22,9 @@ public class CreateGridObjectItemManager : MonoBehaviour
         EventSystem.CreateGridObjectItem -= HandleCreatingGridObjectItem;
     }
 
-    private void HandleCreatingGridObjectItem(int x, int y, GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, Action<GridObjectItemData[]> callback)
+    private void HandleCreatingGridObjectItem(int x, int y, GridSystem<GridObject<GridObjectCellManager>> grid, GridObjectItemData[] gridObjectItemDatas, Action<GridObjectItemData[]> callback)
     {
-        GridObjectItem gridObjectItem = GridObjectItemPoolManager.Instance.GetGridObjectItem();
+        GridObjectCellManager gridObjectItem = GridObjectItemPoolManager.Instance.GetGridObjectItem();
         gridObjectItem.transform.position = grid.GetWorldPositionCenter(x, y);
         gridObjectItem.transform.SetParent(transform);
         
@@ -33,14 +33,14 @@ public class CreateGridObjectItemManager : MonoBehaviour
         gridObjectItem.HandleSettingSubCellsType(grid, gridObjectItemDatas, x, y, _gridGroupsData); 
         //callback?.Invoke(gridObjectItemDatas);
 
-        var gridObject = new GridObject<GridObjectItem>(grid, x, y);
+        var gridObject = new GridObject<GridObjectCellManager>(grid, x, y);
         gridObject.SetValue(gridObjectItem); 
         grid.SetValue(x, y, gridObject); 
     }
 
     private void InitializeGridGroupData()
     {
-        Debug.Log("player level from init: " + LevelManager.Instance.PlayerLevel);
+        //Debug.Log("player level from init: " + LevelManager.Instance.PlayerLevel);
         _gridGroupsData = LevelManager.Instance.LevelDatas[LevelManager.Instance.PlayerLevel - 1].gridGroups; //TODO: COMPARE LEVEL AND LEVEL THAT INSIDE LEVEL DATA.
 
         foreach (var layerData in _gridGroupsData)

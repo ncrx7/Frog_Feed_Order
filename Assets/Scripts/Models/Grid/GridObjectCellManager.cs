@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class GridObjectItem : MonoBehaviour
+public class GridObjectCellManager : MonoBehaviour
 {
     //protected GameObject itemPrefab;
     [SerializeField] private List<GridObjecItemSubCell> _gridObjecItemSubCells;
@@ -26,7 +26,7 @@ public class GridObjectItem : MonoBehaviour
         //GridBoardEventSystem.SetGridObjectItemType -= HandleSettingSubCellsType;
     }
 
-    public void HandleSettingSubCellsType(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y, List<GridGroup> gridGroupData)
+    public void HandleSettingSubCellsType(GridSystem<GridObject<GridObjectCellManager>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y, List<GridGroup> gridGroupData)
     {
         _gridObjectItemXPosition = x;
         _gridObjectItemYPosition = y;
@@ -34,7 +34,7 @@ public class GridObjectItem : MonoBehaviour
         SetSubCells(grid, gridObjectItemDatas, _gridObjectItemXPosition, _gridObjectItemYPosition, gridGroupData);
     }
 
-    private void SetSubCells(GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y, List<GridGroup> gridGroupData)
+    private void SetSubCells(GridSystem<GridObject<GridObjectCellManager>> grid, GridObjectItemData[] gridObjectItemDatas, int x, int y, List<GridGroup> gridGroupData)
     {
         foreach (GridObjecItemSubCell subCell in _gridObjecItemSubCells)
         {
@@ -72,7 +72,7 @@ public class GridObjectItem : MonoBehaviour
         }
     }
 
-    private void SetInitialTopSubCell(GridSystem<GridObject<GridObjectItem>> grid, GridObjecItemSubCell subCell, GridObjectItemData[] gridObjectItemDatas, int x, int y)
+    private void SetInitialTopSubCell(GridSystem<GridObject<GridObjectCellManager>> grid, GridObjecItemSubCell subCell, GridObjectItemData[] gridObjectItemDatas, int x, int y)
     {
         TopGridObjectItemCell = subCell;
 
@@ -86,8 +86,8 @@ public class GridObjectItem : MonoBehaviour
         {
             GridObjectItemData previousGridObjectTopSubCellItemData = null;
 
-            GridObject<GridObjectItem> previousGridObject = grid.GetValue(x, y - 1);
-            GridObjectItem previousGridObjectItem = previousGridObject.GetValue();
+            GridObject<GridObjectCellManager> previousGridObject = grid.GetValue(x, y - 1);
+            GridObjectCellManager previousGridObjectItem = previousGridObject.GetValue();
             List<GridObjecItemSubCell> previousGridObjecItemSubCells = previousGridObjectItem.GetGridObjecItemSubCells();
             foreach (var previousGridObjectItemSubCell in previousGridObjecItemSubCells)
             {
