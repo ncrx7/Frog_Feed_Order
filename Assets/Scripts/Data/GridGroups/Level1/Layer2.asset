@@ -185,6 +185,7 @@ MonoBehaviour:
         y: 1
       cellItemType: 2
       arrowRotationType: 4
+      routeDirection: {x: 1, y: 0, z: 1}
   - items:
     - gridPosition:
         x: 1
@@ -234,13 +235,13 @@ MonoBehaviour:
     arrows: []
   - items:
     - gridPosition:
-        x: 3
-        y: 2
-      cellItemType: 2
-    - gridPosition:
         x: 1
         y: 4
       cellItemType: 1
+    - gridPosition:
+        x: 3
+        y: 2
+      cellItemType: 2
     gridObjectItemData: {fileID: 11400000, guid: cad0a844362db62429f23dc5164ac7ef,
       type: 2}
     frogs: []
@@ -255,3 +256,4 @@ MonoBehaviour:
         y: 2
       cellItemType: 2
       arrowRotationType: 5
+      routeDirection: {x: -1, y: 0, z: 1}

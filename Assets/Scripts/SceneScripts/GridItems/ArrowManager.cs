@@ -65,6 +65,11 @@ public class ArrowManager : MonoBehaviour, IGridObjectItemInteractable
         routeDirection = targetRotation * Vector3.forward;
     }
 
+    public void SetRouteDirection(Vector3 direction)
+    {
+        routeDirection = direction;
+    }
+
     public void SetSubCellBelonging(SubCellManager subCellManager)
     {
         _subCellBelongsTo = subCellManager;

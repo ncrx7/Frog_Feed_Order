@@ -22,6 +22,7 @@ public class FrogTongueManager : MonoBehaviour
     private bool _tongueMoveFinished = false;
     private bool _isCollectingFinishSuccess;
     private HashSet<GameObject> _grapeObjects = new HashSet<GameObject>();
+    private HashSet<GameObject> _arrowObjects = new HashSet<GameObject>();
     private List<Vector3> tonguePath = new List<Vector3>();
 
     void Start()
@@ -45,110 +46,129 @@ public class FrogTongueManager : MonoBehaviour
         StartCoroutine(HandleFrogTongueMoveCoroutine());
     }
 
- private IEnumerator HandleFrogTongueMoveCoroutine()
-{
-    _tongueMoveFinished = false;
-    _lineRenderer.enabled = true;
-    _isProcessing = true;
-    direction = -transform.forward;
-
-    tonguePath.Clear();
-    tonguePath.Add(_tongueEndPoint);
-
-    while (!_tongueMoveFinished)
+    private IEnumerator HandleFrogTongueMoveCoroutine()
     {
-        if (!_isReturning)
+        _tongueMoveFinished = false;
+        _lineRenderer.enabled = true;
+        _isProcessing = true;
+        direction = -transform.forward;
+
+        tonguePath.Clear();
+        tonguePath.Add(_tongueEndPoint);
+
+        while (!_tongueMoveFinished)
         {
-            _tongueEndPoint += direction * _tongueExtendSpeed * Time.deltaTime;
-            _currentTongueLength += _tongueExtendSpeed * Time.deltaTime;
-            tonguePath.Add(_tongueEndPoint); 
-
-            Debug.DrawRay(_tongueEndPoint, direction, Color.blue);
-
-            float sphereRadius = 0.1f; 
-            RaycastHit[] hits = Physics.SphereCastAll(_tongueEndPoint, sphereRadius, direction, _tongueExtendSpeed * Time.deltaTime);
-
-            foreach (var hit in hits)
+            if (!_isReturning)
             {
-                Debug.Log("tongue hitted - non same object");
+                _tongueEndPoint += direction * _tongueExtendSpeed * Time.deltaTime;
+                _currentTongueLength += _tongueExtendSpeed * Time.deltaTime;
+                tonguePath.Add(_tongueEndPoint);
 
-                if (hit.collider.TryGetComponent<GrapeManager>(out GrapeManager grapeManager))
+                Debug.DrawRay(_tongueEndPoint, direction, Color.blue);
+
+                float sphereRadius = 0.1f;
+                RaycastHit[] hits = Physics.SphereCastAll(_tongueEndPoint, sphereRadius, direction, _tongueExtendSpeed * Time.deltaTime);
+
+                foreach (var hit in hits)
                 {
-                    Debug.Log("tongue hitted to grape");
-                    if (_frogManager.GetSubCellBelonging().SubCellColorType == grapeManager.GetSubCellBelonging().SubCellColorType)
+                    //Debug.Log("tongue hitted - non same object");
+
+                    if (hit.collider.TryGetComponent<GrapeManager>(out GrapeManager grapeManager))
                     {
-                        _grapeObjects.Add(hit.collider.gameObject);
+                        //Debug.Log("tongue hitted to grape");
+                        if (_frogManager.GetSubCellBelonging().SubCellColorType == grapeManager.GetSubCellBelonging().SubCellColorType)
+                        {
+                            _grapeObjects.Add(hit.collider.gameObject);
+                        }
+                        else
+                        {
+                            _isReturning = true;
+                            _isCollectingFinishSuccess = false;
+                            break;
+                        }
                     }
-                    else
+                    else if (hit.collider.TryGetComponent<ArrowManager>(out ArrowManager arrowManager))
                     {
-                        _isReturning = true;
-                        _isCollectingFinishSuccess = false;
-                        break; 
+                        if(arrowManager.GetSubCellBelonging() == null )
+                            Debug.Log("subcell null");
+                                
+                        if (_frogManager.GetSubCellBelonging().SubCellColorType == arrowManager.GetSubCellBelonging().SubCellColorType)
+                        {
+                            direction = arrowManager.routeDirection;
+                            _arrowObjects.Add(hit.collider.gameObject);
+                        }
+                        else
+                        {
+                            _isReturning = true;
+                            _isCollectingFinishSuccess = false;
+                            break;
+                        }
+                        //direction = new Vector3(1, 0, 1);
+
+                        Debug.Log("direction: " + direction);
+
+                        _lineRenderer.positionCount++;
+                        _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _tongueEndPoint);
+
+                        tonguePath.Add(_tongueEndPoint);
                     }
                 }
-                else if (hit.collider.TryGetComponent<ArrowManager>(out ArrowManager arrowManager))
+
+                if (_currentTongueLength >= _maxTongueLength)
                 {
-                    //direction = arrowManager.routeDirection;
-                    direction = new Vector3(1, 0, 1);
-                    Debug.Log("direction: " + direction);
-
-                    _lineRenderer.positionCount++;
-                    _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _tongueEndPoint);
-
-                    tonguePath.Add(_tongueEndPoint);
+                    _isReturning = true;
+                    _isCollectingFinishSuccess = true;
+                    foreach (var grape in _grapeObjects)
+                    {
+                        //grape.GetComponent<GrapeManager>().MoveToTarget(transform.position); //TODO: SET TONGUE SPEED TO MOVING OBJECT SPEED
+                        if(grape.TryGetComponent<GrapeManager>(out GrapeManager grapeManager))
+                        {
+                            grapeManager.MoveToTarget(transform.position);
+                        }
+                    }
                 }
-            }
 
-            if (_currentTongueLength >= _maxTongueLength)
-            {
-                _isReturning = true;
-                _isCollectingFinishSuccess = true;
-                foreach (var grape in _grapeObjects)
-                {
-                    grape.GetComponent<GrapeManager>().MoveToTarget(transform.position); //TODO: SET TONGUE SPEED TO MOVING OBJECT SPEED
-                }
-            }
-
-            _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _tongueEndPoint);
-        }
-        else
-        {
-            if (tonguePath.Count > 1)
-            {
-                tonguePath.RemoveAt(tonguePath.Count - 1);
-                _tongueEndPoint = Vector3.MoveTowards(_tongueEndPoint, tonguePath[tonguePath.Count - 1], _tongueExtendSpeed * Time.deltaTime);
                 _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _tongueEndPoint);
             }
             else
             {
-                _tongueEndPoint = Vector3.MoveTowards(_tongueEndPoint, _tongueStartPoint.position, _tongueExtendSpeed * Time.deltaTime);
-                _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _tongueEndPoint);
-            }
-
-            if (_tongueEndPoint == _tongueStartPoint.position)
-            {
-                if (_grapeObjects.Count > 0 && _isCollectingFinishSuccess)
+                if (tonguePath.Count > 1)
                 {
-                    CollectCorrectObjects();
+                    tonguePath.RemoveAt(tonguePath.Count - 1);
+                    _tongueEndPoint = Vector3.MoveTowards(_tongueEndPoint, tonguePath[tonguePath.Count - 1], _tongueExtendSpeed * Time.deltaTime);
+                    _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _tongueEndPoint);
                 }
-                _tongueMoveFinished = true;
-                _isProcessing = false;
-                _lineRenderer.enabled = false;
+                else
+                {
+                    _tongueEndPoint = Vector3.MoveTowards(_tongueEndPoint, _tongueStartPoint.position, _tongueExtendSpeed * Time.deltaTime);
+                    _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _tongueEndPoint);
+                }
 
-                ResetTongue();
+                if (_tongueEndPoint == _tongueStartPoint.position)
+                {
+                    if (_grapeObjects.Count > 0 && _isCollectingFinishSuccess)
+                    {
+                        OnCollectSuccessed();
+                    }
+                    _tongueMoveFinished = true;
+                    _isProcessing = false;
+                    _lineRenderer.enabled = false;
+
+                    ResetTongue();
+                }
             }
+
+            yield return new WaitForSeconds(1 / 1200f);
         }
-
-        yield return new WaitForSeconds(1 / 1200f);
     }
-}
 
 
 
 
 
-    private void CollectCorrectObjects()
+    private void OnCollectSuccessed()
     {
+        //TODO: ADD HITABLE INTERFACE GRRAPE AND ARROW OBJECT. THEN, COLLECT AND CONTROL THEM IN ONE PLACE: O(N) + O(N) -> O(N)
         foreach (GameObject obj in _grapeObjects)
         {
             Debug.Log("Collected: " + obj.name);
@@ -159,18 +179,24 @@ public class FrogTongueManager : MonoBehaviour
 
             //I am destroying top subcell. I dont use cell pool because subcells is instantiating only once in game
 
-
-            //TODO: SET NEW TOP CELL AND SPAWN NEW FROG OR GRAP
-
             grapeSubCell.gridObjectItem.ResetSubCellID();
 
             GrapePoolManager.Instance.ReturnGrapeObject(grapeManager);
-            FrogPoolManager.Instance.ReturnFrogObject(_frogManager);
+            Destroy(grapeSubCell.gameObject);
+        }
+
+        foreach (GameObject obj in _arrowObjects)
+        {
+            ArrowManager arrowManager = obj.GetComponent<ArrowManager>();
+            SubCellManager grapeSubCell = arrowManager.GetSubCellBelonging();
+            grapeSubCell.gridObjectItem.ResetSubCellID();
+            ArrowPoolManager.Instance.ReturnArrowObject(arrowManager);
             Destroy(grapeSubCell.gameObject);
         }
 
         SubCellManager frogSubCell = _frogManager.GetSubCellBelonging();
         frogSubCell.gridObjectItem.ResetSubCellID();
+        FrogPoolManager.Instance.ReturnFrogObject(_frogManager);
         Destroy(frogSubCell.gameObject);
     }
 
@@ -179,6 +205,7 @@ public class FrogTongueManager : MonoBehaviour
         _isReturning = false;
         _currentTongueLength = 0f;
         _grapeObjects.Clear();
+        _arrowObjects.Clear();
         _lineRenderer.SetPosition(0, _tongueStartPoint.position);
         _lineRenderer.SetPosition(1, _tongueStartPoint.position);
     }

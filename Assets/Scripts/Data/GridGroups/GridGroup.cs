@@ -67,6 +67,7 @@ public class Frog : Item
 public class Arrow : Item
 {
     public RotationTypes arrowRotationType;
+    public Vector3 routeDirection;
 }
 
 [Serializable]
