@@ -1351,7 +1351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23634696, g: 1, b: 0, a: 0.2627451}
+  m_Color: {r: 0.18431373, g: 0.79607844, b: 0.70980394, a: 0.8901961}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1475,7 +1475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clickAmountText: {fileID: 1326864952}
-  _defeatHUD: {fileID: 0}
+  _defeatHUD: {fileID: 1198289044}
 --- !u!1 &1326864950
 GameObject:
   m_ObjectHideFlags: 0
