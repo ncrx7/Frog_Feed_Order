@@ -76,6 +76,7 @@ public class FrogTongueManager : MonoBehaviour
                 foreach (var hit in hits)
                 {
                     //Debug.Log("tongue hitted - non same object");
+                    //TODO: CREATE GRAPEMANAGER AND ARROW MANAGET IN A BASE CLASS AND AVOID CODE REPEATING AND MEMEROY ALLOCATION
 
                     if (hit.collider.TryGetComponent<GrapeManager>(out GrapeManager grapeManager))
                     {
