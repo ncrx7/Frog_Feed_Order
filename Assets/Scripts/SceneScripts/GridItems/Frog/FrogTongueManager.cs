@@ -43,7 +43,11 @@ public class FrogTongueManager : MonoBehaviour
 
     public void HandleFrogTongueMove()
     {
+        if( _isProcessing)
+            return;
+
         StartCoroutine(HandleFrogTongueMoveCoroutine());
+        ClickManager.Instance.ReduceCickAmount();
     }
 
     private IEnumerator HandleFrogTongueMoveCoroutine()

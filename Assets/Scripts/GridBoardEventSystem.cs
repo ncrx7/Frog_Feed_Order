@@ -9,4 +9,8 @@ public class GridBoardEventSystem
     public static Action<GridObjectItemData[]> SetGridObjectItemType;
 
     public static Action ClickEvent;
+
+    #region UI Events
+    public static Action<TextType, string> ChangeText;
+    #endregion
 }

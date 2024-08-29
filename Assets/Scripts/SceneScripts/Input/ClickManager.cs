@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 public class ClickManager : MonoBehaviour
 {
     public static ClickManager Instance { get; private set; }
+    [Header("Player Control Capacity")]
+    [SerializeField] private int _clickAmount;
+
     GridSystem<GridObject<GridObjectItem>> grid;
 
     [Header("Click flags")]
@@ -25,6 +28,7 @@ public class ClickManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GridBoardEventSystem.ChangeText?.Invoke(TextType.CLICK_AMOUNT, _clickAmount.ToString());
         GridBoardEventSystem.ClickEvent += HandleClick;
     }
 
@@ -45,7 +49,7 @@ public class ClickManager : MonoBehaviour
 
     private void HandleClick()
     {
-        if (!_isProcessing && !IsPausedGame && SwapAmount > 0)
+        if (!_isProcessing && !IsPausedGame && _clickAmount > 0)
         {
             var gridPos = grid.GetXY(Camera.main.ScreenToWorldPoint(InputManager.Instance.MousePosition));
             if (!GridBoardManager.Instance.IsValidPosition(gridPos) || GridBoardManager.Instance.IsEmptyPosition(gridPos)) return;
@@ -63,8 +67,22 @@ public class ClickManager : MonoBehaviour
             gridTopSubCellManager.gridObjectItemInteractable.Interact();
             //Debug.Log("gridobjectitem: " + gridObjectItem);
 
-
+            //ReduceCickAmount();
         }
+    }
+
+    public void ReduceCickAmount()
+    {
+        //TODO, KNOWN BUG, WHEN A FROG PROCCES, IT CAN BE CLICKED AND REDUCING CLICK
+        _clickAmount--;
+
+        if(_clickAmount <= 0)
+        {
+            _clickAmount = 0;
+            //OnClickAmountRunnedOut
+        }
+
+        GridBoardEventSystem.ChangeText?.Invoke(TextType.CLICK_AMOUNT, _clickAmount.ToString());
     }
 
 
