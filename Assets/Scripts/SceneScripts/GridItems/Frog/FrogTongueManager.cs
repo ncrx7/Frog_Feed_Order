@@ -187,6 +187,7 @@ public class FrogTongueManager : MonoBehaviour
 
             GrapePoolManager.Instance.ReturnGrapeObject(grapeManager);
             Destroy(grapeSubCell.gameObject);
+            LevelManager.Instance.ReduceCellAmount();
         }
 
         foreach (GameObject obj in _arrowObjects)
@@ -196,12 +197,14 @@ public class FrogTongueManager : MonoBehaviour
             grapeSubCell.gridObjectItem.ResetSubCellID();
             ArrowPoolManager.Instance.ReturnArrowObject(arrowManager);
             Destroy(grapeSubCell.gameObject);
+            LevelManager.Instance.ReduceCellAmount();
         }
 
         SubCellManager frogSubCell = _frogManager.GetSubCellBelonging();
         frogSubCell.gridObjectItem.ResetSubCellID();
         FrogPoolManager.Instance.ReturnFrogObject(_frogManager);
         Destroy(frogSubCell.gameObject);
+        LevelManager.Instance.ReduceCellAmount();
     }
 
     private void ResetTongue()

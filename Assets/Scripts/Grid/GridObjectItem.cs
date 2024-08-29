@@ -44,17 +44,13 @@ public class GridObjectItem : MonoBehaviour
                 subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas));
                 SetInitialTopSubCell(grid, subCell, gridObjectItemDatas, x, y);
             }
-            else if (subCell.id == 1)// other cells
-            {
-                subCell.cellManager.SetSubCellColor(GetRandomGridObjectItemType(gridObjectItemDatas)); //TODO: IMPROVE RANDOM ALGORITHM
-                SetOtherSubCellWithGroup(subCell, subCell.id - 1, gridGroupData, x, y, gridObjectItemDatas);
-            }
-            else if (subCell.id == 2)
+            else// other cells
             {
                 SetOtherSubCellWithGroup(subCell, subCell.id - 1, gridGroupData, x, y, gridObjectItemDatas);
             }
 
             subCell.cellManager.gridObjectItem = this;
+            LevelManager.Instance.CellAmountCounter++;
         }
     }
 
@@ -64,8 +60,6 @@ public class GridObjectItem : MonoBehaviour
 
         foreach (var group in layerGroups.groups)
         {
-            //List<GridPosition> groupPosition = group.groupPosition;
-
             foreach (var item in group.items)
             {
                 if (x == item.gridPosition.x && y == item.gridPosition.y)
@@ -75,18 +69,6 @@ public class GridObjectItem : MonoBehaviour
                     subCell.cellManager.SetCellItem(item);
                 }
             }
-
-            /*             foreach (var position in groupPosition)
-                        {
-                            if (x == position.x && y == position.y)
-                            {
-                                //_groupBelongsTo = group;
-
-                                subCell.cellManager.SetSubCellColor(group.gridObjectItemData);
-                                subCell.cellManager.SetSubCellItemType(position.cellItemType);
-                                subCell.cellManager.SetCellGroup(group);
-                            }
-                        } */
         }
     }
 

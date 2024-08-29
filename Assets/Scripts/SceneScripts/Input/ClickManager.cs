@@ -73,13 +73,13 @@ public class ClickManager : MonoBehaviour
 
     public void ReduceCickAmount()
     {
-        //TODO, KNOWN BUG, WHEN A FROG PROCCES, IT CAN BE CLICKED AND REDUCING CLICK
+        //TODO: DETECTED BUG, WHEN A FROG PROCCES, IT CAN BE CLICKED AND REDUCING CLICK
         _clickAmount--;
 
         if(_clickAmount <= 0)
         {
             _clickAmount = 0;
-            EventSystem.SwitchDefeatHudDisplay?.Invoke();
+            EventSystem.SwitchDefeatHudDisplay?.Invoke(HudType.DEFEAT_HUD);
             //OnClickAmountRunnedOut
         }
 

@@ -6,8 +6,9 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
-    public int Level {get; private set;} = 1;
-    private int _maxLevel = 3;
+    public int PlayerLevel {get; private set;} = 1;
+    private int _maxPlayerLevel = 3;
+    public int CellAmountCounter;
 
     //public Dictionary< int, List<GridGroup> > levelGridGroups = new Dictionary< int, List<GridGroup> >();
     public List<LevelData> LevelDatas= new List<LevelData>();
@@ -26,14 +27,25 @@ public class LevelManager : MonoBehaviour
        DontDestroyOnLoad(Instance);
     }
 
-    private void IncreaseLevel()
+    public void IncreaseLevel()
     {
-        if(Level++ >= _maxLevel)
+        if(PlayerLevel++ >= _maxPlayerLevel)
             return;
 
-        Level++;
+        PlayerLevel++;
 
         EventSystem.ChangeScene?.Invoke(1); //same scene
+    }
+
+    public void ReduceCellAmount()
+    {
+        CellAmountCounter--;
+
+        if(CellAmountCounter <= 0)
+        {
+            EventSystem.SwitchDefeatHudDisplay?.Invoke(HudType.VICTORY_HUD);
+            Debug.Log("WINN!!");
+        }
     }
 }
 

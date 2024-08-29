@@ -12,7 +12,7 @@ public class EventSystem
 
     #region Level UI Actions
     public static Action<TextType, string> ChangeText;
-    public static Action SwitchDefeatHudDisplay;
+    public static Action<HudType> SwitchDefeatHudDisplay;
     #endregion
     
 
