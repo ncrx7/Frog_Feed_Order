@@ -1472,11 +1472,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9694751a36b1b4c49816c4376b4bf7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CellAmountCounter: 0
   LevelDatas:
-  - Level: 0
+  - Level: 1
     gridGroups:
     - {fileID: 11400000, guid: ba255d5cb999d334bb42c3d39aabe45d, type: 2}
     - {fileID: 11400000, guid: e80c5a78ac68fb34d9c95e73584451fa, type: 2}
+  - Level: 2
+    gridGroups:
+    - {fileID: 11400000, guid: 10d342b7981f0ea4a8b170f6a9c56a05, type: 2}
+    - {fileID: 11400000, guid: cf987a4354715084580316da0ac98e47, type: 2}
 --- !u!1 &1686837938
 GameObject:
   m_ObjectHideFlags: 0

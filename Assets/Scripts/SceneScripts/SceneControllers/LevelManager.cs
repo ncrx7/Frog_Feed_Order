@@ -6,7 +6,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
-    public int PlayerLevel {get; private set;} = 1;
+    public int PlayerLevel {get; private set;} = 2;
     private int _maxPlayerLevel = 3;
     public int CellAmountCounter;
 
@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
 
     public void IncreaseLevel()
     {
-        if(PlayerLevel++ >= _maxPlayerLevel)
+        if(PlayerLevel + 1 >= _maxPlayerLevel)
             return;
 
         PlayerLevel++;
