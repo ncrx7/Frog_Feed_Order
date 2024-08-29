@@ -1482,6 +1482,10 @@ MonoBehaviour:
     gridGroups:
     - {fileID: 11400000, guid: 10d342b7981f0ea4a8b170f6a9c56a05, type: 2}
     - {fileID: 11400000, guid: cf987a4354715084580316da0ac98e47, type: 2}
+  - Level: 3
+    gridGroups:
+    - {fileID: 11400000, guid: d9d9a47c2a04f5c4683f63e023ca8d58, type: 2}
+    - {fileID: 11400000, guid: c844f064d468b0546aebb5532a3556a7, type: 2}
 --- !u!1 &1686837938
 GameObject:
   m_ObjectHideFlags: 0
