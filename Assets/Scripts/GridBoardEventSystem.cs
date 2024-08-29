@@ -12,5 +12,6 @@ public class GridBoardEventSystem
 
     #region UI Events
     public static Action<TextType, string> ChangeText;
+    public static Action SwitchDefeatHudDisplay;
     #endregion
 }

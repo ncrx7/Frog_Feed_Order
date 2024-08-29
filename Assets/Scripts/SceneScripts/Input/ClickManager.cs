@@ -79,6 +79,7 @@ public class ClickManager : MonoBehaviour
         if(_clickAmount <= 0)
         {
             _clickAmount = 0;
+            GridBoardEventSystem.SwitchDefeatHudDisplay?.Invoke();
             //OnClickAmountRunnedOut
         }
 

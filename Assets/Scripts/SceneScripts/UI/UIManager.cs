@@ -9,16 +9,20 @@ using UnityEngine;
  
 public class UIManager : MonoBehaviour
 {
+    [Header("Reference")]
     [SerializeField] private TextMeshProUGUI _clickAmountText;
+    [SerializeField] private GameObject _defeatHUD;
 
     private void OnEnable()
     {
         GridBoardEventSystem.ChangeText += HandleChangingText;
+        GridBoardEventSystem.SwitchDefeatHudDisplay += HandleSwitchingDefeatHudDisplay;
     }
 
     private void OnDisable()
     {
         GridBoardEventSystem.ChangeText -= HandleChangingText;
+        GridBoardEventSystem.SwitchDefeatHudDisplay -= HandleSwitchingDefeatHudDisplay;
     }
 
     private void HandleChangingText(TextType textType, string text)
@@ -32,6 +36,11 @@ public class UIManager : MonoBehaviour
                 Debug.LogWarning("Undefined Text Type!!");
                 break;
         }
+    }
+
+    private void HandleSwitchingDefeatHudDisplay()
+    {
+        _defeatHUD.SetActive(!_defeatHUD.activeSelf);
     }
 }
 
