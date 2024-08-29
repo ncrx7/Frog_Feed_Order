@@ -28,13 +28,13 @@ public class ClickManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GridBoardEventSystem.ChangeText?.Invoke(TextType.CLICK_AMOUNT, _clickAmount.ToString());
-        GridBoardEventSystem.ClickEvent += HandleClick;
+        EventSystem.ChangeText?.Invoke(TextType.CLICK_AMOUNT, _clickAmount.ToString());
+        EventSystem.ClickEvent += HandleClick;
     }
 
     private void OnDisable()
     {
-        GridBoardEventSystem.ClickEvent -= HandleClick;
+        EventSystem.ClickEvent -= HandleClick;
     }
 
     private void Start()
@@ -79,11 +79,11 @@ public class ClickManager : MonoBehaviour
         if(_clickAmount <= 0)
         {
             _clickAmount = 0;
-            GridBoardEventSystem.SwitchDefeatHudDisplay?.Invoke();
+            EventSystem.SwitchDefeatHudDisplay?.Invoke();
             //OnClickAmountRunnedOut
         }
 
-        GridBoardEventSystem.ChangeText?.Invoke(TextType.CLICK_AMOUNT, _clickAmount.ToString());
+        EventSystem.ChangeText?.Invoke(TextType.CLICK_AMOUNT, _clickAmount.ToString());
     }
 
 

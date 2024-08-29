@@ -42,7 +42,7 @@ public class InputManager : MonoBehaviour
 
     private void OnFired(InputAction.CallbackContext obj)
     {
-        GridBoardEventSystem.ClickEvent?.Invoke();
+        EventSystem.ClickEvent?.Invoke();
         //ClickEvent?.Invoke();
     }
 

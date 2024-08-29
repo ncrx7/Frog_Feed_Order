@@ -51,7 +51,7 @@ public class GridBoardManager : MonoBehaviour
         {
             for (int y = 0; y < _height; y++)
             {
-                GridBoardEventSystem.CreateGridObjectItem?.Invoke(x, y, _grid, _gridObjectItemDatas, GridBoardEventSystem.SetGridObjectItemType);
+                EventSystem.CreateGridObjectItem?.Invoke(x, y, _grid, _gridObjectItemDatas, EventSystem.SetGridObjectItemType);
             }
         }
     }

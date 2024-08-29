@@ -15,14 +15,14 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GridBoardEventSystem.ChangeText += HandleChangingText;
-        GridBoardEventSystem.SwitchDefeatHudDisplay += HandleSwitchingDefeatHudDisplay;
+        EventSystem.ChangeText += HandleChangingText;
+        EventSystem.SwitchDefeatHudDisplay += HandleSwitchingDefeatHudDisplay;
     }
 
     private void OnDisable()
     {
-        GridBoardEventSystem.ChangeText -= HandleChangingText;
-        GridBoardEventSystem.SwitchDefeatHudDisplay -= HandleSwitchingDefeatHudDisplay;
+        EventSystem.ChangeText -= HandleChangingText;
+        EventSystem.SwitchDefeatHudDisplay -= HandleSwitchingDefeatHudDisplay;
     }
 
     private void HandleChangingText(TextType textType, string text)

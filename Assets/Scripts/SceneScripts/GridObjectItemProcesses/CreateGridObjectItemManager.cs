@@ -14,12 +14,12 @@ public class CreateGridObjectItemManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GridBoardEventSystem.CreateGridObjectItem += HandleCreatingGridObjectItem;
+        EventSystem.CreateGridObjectItem += HandleCreatingGridObjectItem;
     }
 
     private void OnDisable()
     {
-        GridBoardEventSystem.CreateGridObjectItem -= HandleCreatingGridObjectItem;
+        EventSystem.CreateGridObjectItem -= HandleCreatingGridObjectItem;
     }
 
     private void HandleCreatingGridObjectItem(int x, int y, GridSystem<GridObject<GridObjectItem>> grid, GridObjectItemData[] gridObjectItemDatas, Action<GridObjectItemData[]> callback)
