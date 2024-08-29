@@ -40,6 +40,8 @@ public class CreateGridObjectItemManager : MonoBehaviour
 
     private void InitializeGridGroupData()
     {
+        _gridGroupsData = LevelManager.Instance.LevelDatas[LevelManager.Instance.Level - 1].gridGroups; //TODO: COMPARE LEVEL AND LEVEL THAT INSIDE LEVEL DATA.
+
         foreach (var layerData in _gridGroupsData)
         {
             foreach (var item in layerData.groups)
