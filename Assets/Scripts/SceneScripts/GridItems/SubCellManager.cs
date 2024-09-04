@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class SubCellManager : MonoBehaviour
 {
+    [Header("References")]
     public ItemColorType SubCellColorType;
     public CellItemType CurrentSubCellItemType;
     public GridObjectCellManager gridObjectItem;
     public GridObjectItemData SubCellItemData;
     public MeshRenderer SubCellMeshRenderer;
     private Item _cellItem;
-    public bool isPainted = false;
 
     /// <summary>
     /// This is unnecessary since we will only interact with the frog in this game.
     /// But I am using an interface so that interacting with more than one object on the board will be easier programmatically in the future.
     /// </summary>
+    [Header("Object Integrated Features")]
     public IGridObjectItemClickInteractable gridObjectItemInteractable;
 
     public void SetSubCellColor(GridObjectItemData subCellItemData)

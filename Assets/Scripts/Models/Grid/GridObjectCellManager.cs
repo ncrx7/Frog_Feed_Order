@@ -7,11 +7,14 @@ using UnityEngine;
 public class GridObjectCellManager : MonoBehaviour
 {
     //protected GameObject itemPrefab;
-    [SerializeField] private List<GridObjecItemSubCell> _gridObjecItemSubCells;
     public GridObjecItemSubCell TopGridObjectItemCell { get; set; }
     public GridObjectItemData CurrentGridObjectItemData { get; set; }
+
+    [Header("Data Structures")]
+    [SerializeField] private List<GridObjecItemSubCell> _gridObjecItemSubCells;
     HashSet<int> _dataUsedIndices = new HashSet<int>();
 
+    [Header("Positions")]
     private int _gridObjectItemXPosition;
     private int _gridObjectItemYPosition;
     //public ItemType itemType;

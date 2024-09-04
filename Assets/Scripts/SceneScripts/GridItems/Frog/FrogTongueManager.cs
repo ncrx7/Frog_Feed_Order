@@ -17,10 +17,13 @@ public class FrogTongueManager : MonoBehaviour
     private Vector3 _tongueEndPoint;
     private float _currentTongueLength;
 
+    [Header("Flags")]
     private bool _isProcessing = false;
     private bool _isReturning = false;
     private bool _tongueMoveFinished = false;
     private bool _isCollectingFinishSuccess;
+
+    [Header("Data Structures")]
     private HashSet<GameObject> _hittableObjects = new HashSet<GameObject>();
     private List<Vector3> tonguePath = new List<Vector3>();
 
