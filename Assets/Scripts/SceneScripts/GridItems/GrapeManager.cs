@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class GrapeManager : MonoBehaviour, IGridObjectItemClickInteractable
+public class GrapeManager : MonoBehaviour, IGridObjectItemClickInteractable, IHittable
 {
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] Texture _frogTexture;
@@ -42,4 +42,26 @@ public class GrapeManager : MonoBehaviour, IGridObjectItemClickInteractable
     {
         transform.DOMove(targetPosition, moveDuration).SetEase(Ease.Linear);
     }
+
+    public void Hit(FrogManager frogManager, ref Vector3 direction, HashSet<GameObject> collectedObjects, LineRenderer lineRenderer, List<Vector3> tonguePath, Vector3 tongueEndPoint)
+    {
+        collectedObjects.Add(gameObject);
+    }
+
+    public SubCellManager GetSubCellManager()
+    {
+        if (_subCellBelongsTo == null)
+            return null;
+
+        return _subCellBelongsTo;
+    }
+
+
+    /*     public ItemColorType? GetSubCellColor()
+        {
+            if(_subCellBelongsTo == null)
+                return null;
+
+            return _subCellBelongsTo.SubCellColorType;
+        } */
 }

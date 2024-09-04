@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowManager : MonoBehaviour, IGridObjectItemClickInteractable
+public class ArrowManager : MonoBehaviour, IGridObjectItemClickInteractable, IHittable
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private RotationTypes _arrowRotationType;
@@ -83,5 +83,22 @@ public class ArrowManager : MonoBehaviour, IGridObjectItemClickInteractable
     public void ClickInteract()
     {
         Debug.LogWarning("You can not click the arrows!!");
+    }
+
+    public void Hit(FrogManager frogManager, ref Vector3 direction, HashSet<GameObject> collectedObjects, LineRenderer lineRenderer, List<Vector3> tonguePath, Vector3 tongueEndPoint)
+    {
+        direction = routeDirection;
+        collectedObjects.Add(gameObject);
+        lineRenderer.positionCount++;
+        lineRenderer.SetPosition(lineRenderer.positionCount - 1, tongueEndPoint);
+        tonguePath.Add(tongueEndPoint);
+    }
+
+    public SubCellManager GetSubCellManager()
+    {
+        if (_subCellBelongsTo == null)
+            return null;
+
+        return _subCellBelongsTo;
     }
 }
