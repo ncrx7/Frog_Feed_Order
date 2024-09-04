@@ -46,10 +46,12 @@ public class LevelManager : MonoBehaviour
             if (PlayerLevel == 3)
             {
                 EventSystem.SwitchDefeatHudDisplay?.Invoke(HudType.FINISHEDGAME_HUD);
+                EventSystem.PlaySoundClip?.Invoke(SoundType.WIN_ROUND);
             }
             else
             {
                 EventSystem.SwitchDefeatHudDisplay?.Invoke(HudType.VICTORY_HUD);
+                EventSystem.PlaySoundClip?.Invoke(SoundType.WIN_ROUND);
             }
         }
     }

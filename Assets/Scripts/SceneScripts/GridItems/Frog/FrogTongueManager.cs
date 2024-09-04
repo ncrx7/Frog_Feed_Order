@@ -94,6 +94,7 @@ public class FrogTongueManager : MonoBehaviour
                 if (_frogManager.GetSubCellBelonging().SubCellColorType == hittableObject.GetSubCellManager().SubCellColorType)
                 {
                     hittableObject.Hit(_frogManager, ref direction, _hittableObjects, _lineRenderer, tonguePath, _tongueEndPoint);
+                     
                 }
                 else
                 {

@@ -8,6 +8,7 @@ public class EventSystem
     public static Action<int, int, GridSystem<GridObject<GridObjectCellManager>>, GridObjectItemData[], Action<GridObjectItemData[]>> CreateGridObjectItem;
     public static Action<GridObjectItemData[]> SetGridObjectItemType;
     public static Action ClickEvent;
+    public static Action<SoundType> PlaySoundClip;
     
 
     #region Level UI Actions
