@@ -2104,7 +2104,7 @@ MonoBehaviour:
   _lineRenderer: {fileID: 6250016745546184781}
   _tongueStartPoint: {fileID: 5556669665675288544}
   direction: {x: 0, y: 0, z: 0}
-  _maxTongueLength: 8
+  _maxTongueLength: 10
   _tongueExtendSpeed: 5
   _frogManager: {fileID: 3268120667244737721}
 --- !u!120 &6250016745546184781
